@@ -8,3 +8,15 @@
 body{
   padding-top: 2.3em;
 }
+
+
+#cheatsheet-page{
+  .combo{
+    margin-bottom: 2.0em;
+  }
+
+  .description{
+    font-family: $font-family-sans-serif;
+    font-size: 14px;
+  }
+}

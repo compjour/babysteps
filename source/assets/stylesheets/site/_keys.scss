@@ -98,6 +98,14 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
     text-align: left;
     text-transform: lowercase;
   }
+
+  &.tilde{
+    padding-top: 2px;
+    .symbol{
+      display: block;
+      margin-bottom: 7px;
+    }
+  }
 }
 
 

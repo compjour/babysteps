@@ -1,15 +1,36 @@
 - title: New window
   keys: [Command, N]
+  description: Open a new browser window.
+  image: /files/images/keyboards/chrome/open-new-window.gif
 
 - title: New tab
   keys: [Command, T]
+  description: Open a new browser tab.
+  image: /files/images/keyboards/chrome/new-tab.gif
 
-- title: Move cursor to search bar
+- title: Switch windows
+  keys: [Command, "~"]
+  description: Switch between browser windows.
+  image: /files/images/keyboards/chrome/switch-window.gif
+
+- title: Select next tab
+  keys: [Command, Alt, Right]
+  description: Move from left to right among the tabs in the current window.
+  image: /files/images/keyboards/chrome/select-next-tab.gif
+
+- title: Open Location
   keys: [Command, L]
-
+  description: |
+    Moves cursor to allow you to type directly into the __Search Bar__.
+  image: /files/images/keyboards/chrome/open-location.gif
 
 - title: Close tab/window
   keys: [Command, W]
+  description: |
+    Closes just the current tab or, if only one tab is open, the browser window.
 
 - title: Open last tab/window
   keys: [Command, Shift, T]
+  description: |
+    Re-opens the last tab or window that you closed. Handy for when you accidentally close something you wanted to keep.
+  image: /files/images/keyboards/chrome/open-last-tab.gif
