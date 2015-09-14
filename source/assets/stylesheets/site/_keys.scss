@@ -99,3 +99,14 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
     text-transform: lowercase;
   }
 }
+
+
+.kb.plus{
+  display: block;
+  float: left;
+  margin: 5px;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  font-family: $font-family-monospace;
+}

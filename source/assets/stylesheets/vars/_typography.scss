@@ -17,7 +17,7 @@ $font-size-h6:            ceil(($font-size-base * 0.85)) !default; // ~12px
 $font-family-serif:       "Lora", Georgia, "Times New Roman", Times, serif !default;
 $font-family-sans-serif:  "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif !default;
 $font-family-headings:    $font-family-sans-serif;
-
+$font-family-monospace:  Menlo, Courier, monospace;
 
 //** Unit-less `line-height` for use in components like buttons.
 $line-height-base:        1.528571429 !default;
