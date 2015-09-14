@@ -1,0 +1,25 @@
+---
+title: Notes about the State Department Clinton Email Dump
+---
+
+
+
+The [emails were released by the State Department](https://foia.state.gov/search/results.aspx?collection=Clinton_Email).
+
+This Wall Street Journal scraped the individual email files and compiled them to [create their interactive database: "Search Hillary Clinton’s Emails"](http://graphics.wsj.com/hillary-clinton-email-documents/):
+
+
+~~~sh
+$: cd /tmp
+$: wget http://graphics.wsj.com/hillary-clinton-email-documents/zips/Clinton_Email_August_Release.zip
+$: cd Clinton_Email_August_Release
+$: for fname in *.pdf; do 
+    pdftotext -layout $fname $(basename $fname '.pdf').txt;
+  done
+~~~
+
+~~~sh
+cd ..
+mv Clinton_Email_August_Release clinton_email_august_pdf_w_text
+zip -r clinton_email_august_pdf_w_text.zip clinton_email_august_pdf_w_text/
+~~~
