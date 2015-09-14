@@ -1,13 +1,13 @@
 site:
-  title: 'Baby Steps In Computational Tools'
-  baseurl: 'http://fall2015.padjo.org'
+  title: 'Computational Baby Steps'
+  baseurl: 'http://babysteps.compjour.org'
   description: |
-    A practical primer of how to get started with computational tools and thinking.
+    A practical walkthrough of baby steps toward learning more sophisticated computational techniques and tools for data journalism.
   author: Dan Nguyen
   repo:
     github:
       id: compjour
-      repo: babysteps.compjour.org
+      repo: babysteps
   image_url: /assets/images/footer-logo.png # TODO: add image meta tag
 
 

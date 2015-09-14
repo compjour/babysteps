@@ -1,0 +1,101 @@
+/* Code adapted from Dustin Cartright:
+https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
+*/
+
+/* Micro Clearfix by Nicolas Gallagher - http://nicolasgallagher.com/micro-clearfix-hack */
+        /* For modern browsers */
+.kbs:before, .kbs:after {content:""; display:table;}
+.kbs:after {clear:both;}
+
+
+.kbkey{
+  background: #222;
+  color: #bbb;
+
+  display: block;
+  float: left;
+  font-weight: bold;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 11px;
+  text-decoration: none;
+  text-align: center;
+  width: 44px;
+  height: 41px;
+  margin: 5px;
+  padding: 5px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-top: 1px solid #222;
+  box-shadow: inset 0 0 25px #333, 0 1px 0 #000, 0 2px 0 #222, 0 2px 3px #333;
+  text-shadow: 0px -1px 0px #000;
+
+  &.lite{
+    background: #eff0f2;
+    color: #aaa;
+    border-top: 1px solid #e2e2e2;
+    -webkit-box-shadow:
+      inset 0 0 25px #e8e8e8,
+      0 1px 0 #c3c3c3,
+      0 2px 0 #c9c9c9,
+      0 2px 3px #333;
+    -moz-box-shadow:
+      inset 0 0 25px #e8e8e8,
+      0 1px 0 #c3c3c3,
+      0 2px 0 #c9c9c9,
+      0 2px 3px #333;
+    box-shadow:
+      inset 0 0 25px #e8e8e8,
+      0 1px 0 #c3c3c3,
+      0 2px 0 #c9c9c9,
+      0 2px 3px #333;
+    text-shadow: 0px 1px 0px #f5f5f5;
+  }
+}
+
+
+.kbkey{
+  text-align: center;
+  padding-top: 13px;
+
+  &.ctrl{
+    padding-top: 20px;
+    text-align: center;
+    width: 50px;
+  }
+
+  &.cmd{
+    padding-top: 2px;
+    text-align: center;
+    width: 66px;
+    .symbol{
+      display: block;
+      margin-bottom: 4px;
+      text-align: right;
+    }
+  }
+
+  &.tab{
+    padding: 22px 0 0 10px;
+    width: 72px;
+    text-align: left;
+  }
+
+  &.alt{
+    padding-top: 2px;
+    text-align: left;
+    width: 50px;
+    .symbol{
+      display: block;
+      font-size: smaller;
+      text-transform: lowercase;
+      margin-bottom: 5px;
+    }
+  }
+
+  &.shift{
+    padding-top: 20px;
+    width: 80px;
+    text-align: left;
+    text-transform: lowercase;
+  }
+}

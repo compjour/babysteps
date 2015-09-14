@@ -1,0 +1,15 @@
+- title: New window
+  keys: [Command, N]
+
+- title: New tab
+  keys: [Command, T]
+
+- title: Move cursor to search bar
+  keys: [Command, L]
+
+
+- title: Close tab/window
+  keys: [Command, W]
+
+- title: Open last tab/window
+  keys: [Command, Shift, T]

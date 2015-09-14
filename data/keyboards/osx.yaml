@@ -1,0 +1,6 @@
+- title: Switch applications
+  keys: [Cmd, Tab]
+
+- title: Switch windows within an application
+  keys: [Cmd, ~]
+

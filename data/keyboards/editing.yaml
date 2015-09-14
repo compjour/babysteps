@@ -1,0 +1,8 @@
+- title: Select All
+  keys: [Command, A]
+
+- title: Copy to clipboard
+  keys: [Command, C]
+
+- title: Paste from clipboard
+  keys: [Command, V]
