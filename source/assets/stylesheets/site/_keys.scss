@@ -62,7 +62,7 @@ $key-base-padding: 5px;
   padding-top: 13px * $key-size-factor;
 
   &.ctrl{
-    padding-top: 20px * $key-size-factor;
+    padding-top: 21px * $key-size-factor;
     text-align: center;
     width: 50px * $key-size-factor;
   }
@@ -79,7 +79,7 @@ $key-base-padding: 5px;
   }
 
   &.tab{
-    padding: 22px 0 0 10px;
+    padding: 34px 0 0 10px;
     width: 72px * $key-size-factor;
     text-align: left;
   }
@@ -92,12 +92,12 @@ $key-base-padding: 5px;
       display: block;
       font-size: smaller;
       text-transform: lowercase;
-      margin-bottom: 5px;
+      margin-bottom: 12px;
     }
   }
 
   &.shift{
-    padding-top: 20px;
+    padding-top: 34px;
     width: 80px * $key-size-factor;
     text-align: left;
     text-transform: lowercase;

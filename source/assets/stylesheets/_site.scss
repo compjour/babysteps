@@ -11,8 +11,13 @@ body{
 
 
 #cheatsheet-page{
+
+  h2{
+    margin-top: 2.0em;
+    font-size: 45px;
+  }
   .combo{
-    margin-bottom: 2.0em;
+    margin-bottom: 3.0em;
     &.pri1{
       .title{
         color: #C00;
@@ -28,7 +33,7 @@ body{
 
 
 
-  .description{
+  .description p{
     font-family: $font-family-sans-serif;
     font-size: 14px;
   }

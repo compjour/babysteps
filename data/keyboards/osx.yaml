@@ -2,12 +2,7 @@
   keys: [Command, Tab]
   priority: 1
   description: |
-    If you memorize only one keyboard shortcut for daily use, it should be this one. It's difficult enough as it is to multi-task, but it's substantially worse if it takes you several seconds (and accumulated wrist-strain) just to switch between apps with your mouse.
-
-- title: Reverse-cycle through open applications
-  keys: [Command, Shift, Tab]
-  description: |
-    Cycles through applications from right-to-left. I rarely use this because when you hit __Command+Tab__ once, OS X will switch you to the last active application. If I have to hit __Command+Tab__ more than twice, to the point where going right-to-left saves me time, it means I have too many applications open.
+    This shortcut is likely the one to have the most positive impact on your everday computing. Multitasking is hard. This shortcut helps prevent the loss of focus -- and carpal tunnel syndrome -- that comes from the several seconds it takes you to find-point-and-click your way between applications.
 
 - title: Switch windows within an application
   keys: [Command, "~"]

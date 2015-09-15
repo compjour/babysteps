@@ -1,0 +1,33 @@
+- title: Autocomplete
+  priority: 1
+  keys: Tab
+  description: |
+    If you aren't hitting the Tab key at least once or more per command, then you are at risk for some extremely painful typo-based errors. Autocomplete isn't just for clumsy typists. It's for anyone who doesn't want to spend more brainpower and energy than required on memorizing exact spellings of commands and filenames.
+
+- title: Move backwards through command history
+  priority: 1
+  keys: Up
+  description: |
+    This shortcut lets you rapidly edit and re-run commands without having to retype them by hand. Like __Tab__ for autocomplete, this command is designed to let you focus on the cognitive rather than mechanical part of computing.
+
+- title: Abort current task
+  priority: 1
+  keys: [Control, C]
+  description: |
+    Sometimes a command takes much longer than expected to run. This shortcut sends an interrupt signal to the computer to abort the current task and return control to the user. As a novice shell scripter, you might find that hitting Enter doesn't do anything. You might have misplaced a closing quotation-mark or bracket; this shortcut is also handy to just get you back to the prompt.
+
+
+- title: Clear screen
+  keys: [Control, L]
+  description: |
+    Many shell commands clutter your screen with long blocks of output text and warning/error messages. Use this shortcut to start with a clean _visual_ slate.
+
+- title: Jump to beginning of the line
+  keys: [Control, A]
+  description: |
+    The basic shell lacks many of the multi-line navigation conveniences you're used to in a text-editor; for example, __Up__ and __Down__ do not let you move up and down a single line. For the most part, if you need to fix a typo in the middle of a command, you have to hold down __Left__ or __Right__ to move the cursor there. If the fix is nearer the start of the line, use __Control+A__ to get there a little more quickly.
+
+- title: Jump to end of the line
+  keys: [Control, E]
+  description: |
+    The opposite of __Control-A__; think of the "E" as an abbreviation for "End". Another tip: Most text editors also use Control-A and Control-E to same effect.
