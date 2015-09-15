@@ -1,0 +1,120 @@
+---
+title: Everyday Exercises for the Aspiring Shell User
+---
+
+The best way to learn the shell -- aside from becoming a full time shell programmer, which may not be your actual childhood dream -- is to find everyday ways that the shell can improve your life.
+
+
+# A progressive understanding of wget
+
+The [wget manual](https://www.gnu.org/software/wget/manual/wget.html)
+
+## Download one file one at a time
+
+~~~sh
+wget http://www.cde.ca.gov/ds/sp/ai/documents/sat13.xls
+~~~
+
+## Specify a directory
+
+> `--directory-prefix=prefix`
+> Set directory prefix to prefix. The directory prefix is the directory where all other files and subdirectories will be saved to, i.e. the top of the retrieval tree. The default is ‘.’ (the current directory).
+
+
+~~~sh
+wget http://www.cde.ca.gov/ds/sp/ai/documents/sat13.xls --directory-prefix=school_scores
+~~~
+
+## Re-arrange it:
+
+~~~sh
+wget --directory-prefix=school_scores http://www.cde.ca.gov/ds/sp/ai/documents/sat13.xls
+wget --directory-prefix=school_scores http://www.cde.ca.gov/ds/sp/ai/documents/sat12.xls
+wget --directory-prefix=school_scores http://www.cde.ca.gov/ds/sp/ai/documents/sat11.xls 
+~~~
+
+## There must be a way to get all of them
+
+~~~sh
+$ wget --directory-prefix=school_scores --accept=xls http://www.cde.ca.gov/ds/sp/ai/
+~~~
+
+~~~sh
+$ wget --accept=xls --recursive --level=1 \
+    --directory-prefix=school_scores \
+    http://www.cde.ca.gov/ds/sp/ai/
+~~~
+
+This creates a bit of a mess because it replicates the directory structure of the original website, even though we just wanted spreadsheet files:
+
+![/image](files/images/lessons/wget-cde-tree-mess.png)
+
+
+
+## Avoid downloading the directory structure
+
+By this time, you might be comfortable enough with the command line that you can start deleting files from it. Again, this command can be _very dangerous_: hit __Tab__ to autocomplete the `school_scores` directory name, not only to prevent a typo but to _make sure it exists_. Many catastrophic file-system-destroying errors have happened because [a shell user wrongly assumed where they were in the file system](http://readwrite.com/2015/01/17/steam-bug-linux-erases-user-files).
+
+~~~sh
+$ rm -r school_scores/
+~~~
+
+Now re-run the previous wget with this additional option:
+
+> `--no-directories`
+> Do not create a hierarchy of directories when retrieving recursively. With this option turned on, all files will get saved to the current directory, without clobbering (if a name shows up more than once, the filenames will get extensions ‘.n’).
+
+~~~sh
+$ wget --accept=xls --recursive --level=1 --no-directories \
+    --directory-prefix=school_scores \
+    http://www.cde.ca.gov/ds/sp/ai/
+~~~
+
+Again, get used to using the `open` command:
+
+~~~sh
+$ open school_scores/
+~~~
+
+Or use the ubiquitous __ls__ command to list files within the shell:
+
+~~~sh
+$ ls school_scores
+~~~
+
+The `--no-directories` option creates a much nicer listing:
+
+![image](/files/images/lessons/wget-cde-tree-flat.png)
+
+
+
+## Shorten the command
+
+~~~sh
+$ wget -A xls -r -l 1 -nd \
+    -P school_scores \
+    http://www.cde.ca.gov/ds/sp/ai/
+~~~
+
+
+
+# Other exercises
+
+
+## Zipping and unzipping files
+### Unzip a file
+### Zip files
+
+## Screengrab
+
+## Scouting massive data files
+
+
+
+
+
+
+
+
+
+
