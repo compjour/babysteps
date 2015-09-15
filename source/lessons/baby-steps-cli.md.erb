@@ -1,0 +1,140 @@
+---
+title: Command-line exploration of Beyonce as a popular baby name
+---
+
+* TOC
+{:toc}
+
+
+# Setting up our environment
+
+## Open your apps
+
+Open:
+
+- Chrome (you're probably already on it)
+- Terminal
+- Finder (this is always open on OS X)
+
+Notice that we don't need to open up Excel.
+
+
+## Practice your keyboarding
+
+If you have a small monitor and can't squeeze the Terminal and Chrome on the same screen, it's OK. This is a great chance to practice reflexively using the keyboard to get around your operating system.
+
+Use __Command-Tab__ to switch between the two applications. 
+
+<%= kbset("Command", "Tab") %>
+
+Use __Tab__, when in Terminal, to do auto-complete.
+
+<%= kbset("Tab") %>
+
+
+# Getting the data
+
+TK How we get the data
+
+## Making a new directory
+
+~~~sh
+$ cd /tmp                # Change into /tmp/ directory
+$ mkdir babynames        # Make the directory babynames/ inside of /tmp/
+$ cd babynames           # Change into babynames/ directory
+~~~
+
+Alternatively, this would have worked:
+
+~~~sh
+$ mkdir /tmp/babynames    # Make the directory /tmp/babynames
+$ cd /tmp/babynames       # Change into /tmp/babynames
+~~~
+
+Use the __pwd__ command ("print working directory") to make sure you're in the right place:
+
+~~~sh
+$ pwd
+# /tmp/babynames
+~~~
+
+## Download the file with wget
+
+Let's assume we already know the URL of the zip file:
+
+[http://www.ssa.gov/oact/babynames/names.zip](http://www.ssa.gov/oact/babynames/names.zip)
+
+~~~sh
+$ wget http://www.ssa.gov/oact/babynames/names.zip
+~~~
+
+A little progress bar should pop up. Depending on how fast your Internet connection is, the download might take a few minutes.
+
+TK
+
+Is the file even there? Let's confirm it the "old-fashioned" way by using the __open__ command, followed by a __dot__ (i.e., a period) -- the dot stands for "current directory":
+
+~~~sh
+$ open .
+# Or alternatively, to be explicit:
+$ open /tmp/babynames
+~~~
+
+This should pop open the friendly Finder window where we can see the lone `names.zip` file listed.
+
+
+## Unzip the file
+
+Don't double-click the __names.zip__ file to unzip it. Rather, switch back to the Terminal (again, use the __Command-Tab__ shortcut). 
+
+Then type the command `unzip`...but _before_ pressing __Enter__ -- did you already forget the name of the file you downloaded? Remember to hit __Tab__ -- heck, even if you remember the name of the file, hit __Tab__ anyway out of habit. Unless `/tmp/babynames` was not already empty, the downloaded file name _should_ auto-complete:
+
+~~~sh
+$ unzip names.zip
+~~~
+
+Run the command by hitting __Enter__; you should see the list of files zip by. Re-run the command that opens up the `/tmp/babynames` folder in Finder to verify that the files showed up.
+
+Or, you can think to yourself, "_Gee, finding out if files are in a directory seems like a very common task. There must be a better way!_".
+
+Then use the proper keyboard shortcuts to pop open a new Chrome web browser window and search for "how to list files in a directory". Or, I'll save you the trouble:
+
+~~~sh
+$ ls
+~~~
+
+And now we don't have to `open` a directory path just to see what's in it.
+
+# Searching the data
+
+Let's replicate the work in the point-and-click tutorial by finding "Beyonce" in the __yob2014.txt__ file.
+
+~~~sh
+$ ag Beyonce yob2014.txt
+~~~
+
+
+## Repeat, change, repeat
+
+~~~sh
+$ ag Beyonce yob2013.txt
+$ ag Beyonce yob2012.txt
+$ ag Beyonce yob2011.txt
+~~~
+
+TKGIF
+
+## The power of the wildcard
+
+~~~sh
+$ ag Beyonce yob2014
+~~~
+
+
+
+
+# We're done...?
+
+
+- [Visualizing in Excel](/TK)
+- [Regular expression searching](/TK)

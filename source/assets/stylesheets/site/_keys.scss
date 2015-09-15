@@ -4,25 +4,27 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
 
 /* Micro Clearfix by Nicolas Gallagher - http://nicolasgallagher.com/micro-clearfix-hack */
         /* For modern browsers */
+
 .kbs:before, .kbs:after {content:""; display:table;}
 .kbs:after {clear:both;}
 
+$key-size-factor: 1.5;
 
 .kbkey{
   background: #222;
-  color: #bbb;
+  color: #dddddd;
 
   display: block;
   float: left;
   font-weight: bold;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 11px;
+  font-size: 11px * $key-size-factor;
   text-decoration: none;
   text-align: center;
-  width: 44px;
-  height: 41px;
-  margin: 5px;
-  padding: 5px;
+  width: 44px * $key-size-factor;
+  height: 41px * $key-size-factor;
+  margin: 5px * $key-size-factor;
+  padding: 5px * $key-size-factor;
   -moz-border-radius: 4px;
   border-radius: 4px;
   border-top: 1px solid #222;
@@ -55,35 +57,35 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
 
 .kbkey{
   text-align: center;
-  padding-top: 13px;
+  padding-top: 13px * $key-size-factor;
 
   &.ctrl{
-    padding-top: 20px;
+    padding-top: 20px * $key-size-factor;
     text-align: center;
-    width: 50px;
+    width: 50px * $key-size-factor;
   }
 
   &.cmd{
-    padding-top: 2px;
+    padding-top: 2px * $key-size-factor;
     text-align: center;
-    width: 66px;
+    width: 66px * $key-size-factor;
     .symbol{
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 4px * $key-size-factor;
       text-align: right;
     }
   }
 
   &.tab{
     padding: 22px 0 0 10px;
-    width: 72px;
+    width: 72px * $key-size-factor;
     text-align: left;
   }
 
   &.alt{
     padding-top: 2px;
     text-align: left;
-    width: 50px;
+    width: 50px * $key-size-factor;
     .symbol{
       display: block;
       font-size: smaller;
@@ -94,7 +96,7 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
 
   &.shift{
     padding-top: 20px;
-    width: 80px;
+    width: 80px * $key-size-factor;
     text-align: left;
     text-transform: lowercase;
   }
@@ -115,6 +117,6 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
   margin: 5px;
   padding-top: 10px;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 16px * $key-size-factor;
   font-family: $font-family-monospace;
 }

@@ -3,23 +3,34 @@ title: Notes about the State Department Clinton Email Dump
 ---
 
 
-
 The [emails were released by the State Department](https://foia.state.gov/search/results.aspx?collection=Clinton_Email).
 
-This Wall Street Journal scraped the individual email files and compiled them to [create their interactive database: "Search Hillary Clinton’s Emails"](http://graphics.wsj.com/hillary-clinton-email-documents/):
+This Wall Street Journal scraped the individual email files and compiled them to [create their interactive database: "Search Hillary Clinton’s Emails"](http://graphics.wsj.com/hillary-clinton-email-documents/).
 
+For the exercises in this repository, I downloaded the WSJ's August file, extracted the text and saved it as a file along with each PDF, and zipped up the folder and uploaded to my own server:
+
+http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip
+
+
+For my own records, here's how I produced my version of the file:
 
 ~~~sh
-$: cd /tmp
-$: wget http://graphics.wsj.com/hillary-clinton-email-documents/zips/Clinton_Email_August_Release.zip
-$: cd Clinton_Email_August_Release
-$: for fname in *.pdf; do 
+$ mkdir -p /tmp/blahblah
+$ cd /tmp/blahblah
+$ wget http://graphics.wsj.com/hillary-clinton-email-documents/zips/Clinton_Email_August_Release.zip
+$ unzip Clinton_Email_August_Release.zip -d clinton_email_august_pdf_w_text
+$ cd clinton_email_august_pdf_w_text
+$ for fname in *.pdf; do 
     pdftotext -layout $fname $(basename $fname '.pdf').txt;
   done
+$ cd ..
 ~~~
 
+
+Zip the data and move to my AWS S3 bucket:
+
 ~~~sh
-cd ..
-mv Clinton_Email_August_Release clinton_email_august_pdf_w_text
-zip -r clinton_email_august_pdf_w_text.zip clinton_email_august_pdf_w_text/
+$ zip -r clinton_email_august_pdf_w_text.zip clinton_email_august_pdf_w_text/
+$ aws s3 cp clinton_email_august_pdf_w_text.zip \
+    s3://stash.compjour.org/babysteps/ --acl public-read
 ~~~

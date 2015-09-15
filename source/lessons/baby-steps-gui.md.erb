@@ -1,0 +1,106 @@
+---
+title: Point-and-click exploration of Beyonce as a popular baby name
+---
+
+* TOC
+{:toc}
+
+# Getting the data
+
+## Navigate to the webpage
+
+Visit the U.S. Social Security Administration's page titled, [Popular Baby Names: Beyond the Top 1000 Names](http://www.ssa.gov/oact/babynames/limits.html). 
+
+## Download the file
+
+There are two links with little zip file icons next to them. 
+
+![image](/files/images/lessons/ssa-babynames-save-as.png)
+
+Right-click on the one titled, ["National Data"](http://www.ssa.gov/oact/babynames/names.zip).
+
+In the pop-up menu, click __Save Link As...__ and choose the folder to download to.
+
+Or you can just left-click the file link which should just automatically download the file to your default downloads folder. And by default, the file name will be: __names.zip__.
+
+## Unzip the file
+
+Go to the folder in which you downloaded the file. If you didn't change the actual name of the file, it should just be __names.zip__. 
+
+Double-click the file and it should automatically unzip and create a folder, __names__.
+
+
+## Open the unpacked folder
+
+Double-click the folder to open it:
+
+![image](/files/images/lessons/ssa-babynames-names-folder.png)
+
+The zip file contains a text file for every year -- 1880 to 2014 -- of Social Security data. While having more data is often better than less data, it's kind of annoying in our case. We just want to see how many babies have been named "Beyonce". But to do that for every year, we have to open up _every_ file.
+
+# Searching the data
+
+
+## Open the file in Excel
+
+At this point, not knowing a more efficient way to collate the data, let's just go for the more timely data in the file named: __yob2014.txt__
+
+Right-click the file to bring up a pop-up menu. Select __Open With__, and then __Microsoft Excel__ if you have it. If not, you can always use OS X's __Numbers.app__.
+
+![image](/files/images/lessons/ssa-babynames-open-as-excel.png)
+
+Your Excel spreadsheet, depending on how your system is set up, will probably display something __that does not look like an actual spreadsheet__. Here's what mine looks like:
+
+![image](/files/images/lessons/ssa-babynames-messy-excel.png)
+
+If you try sorting it, you'll see that it only sorts by the name. If you wanted to order the list by baby count, or filter by sex, you couldn't.
+
+
+## Search for Beyonce
+
+
+Oh well, we only wanted to know about babies named Beyonce, we just need to a simple text search.
+
+In the __Edit__ menu, select the __Find...__ command -- or better yet, use the keyboard shortcut, __Command-F__.
+
+This brings up a dialog box. 
+
+Type in `beyonce` (the search doesn't have to be case-sensitive). 
+
+Then, click the __Find Next__ button to find the first "Beyonce".
+
+![image](/files/images/lessons/ssa-babynames-excel-find-box.png)
+
+
+## Finding Beyonce
+
+Looks like there were 22 babies in the United States who were named Beyonce, and all were female. 
+
+![image](/files/images/lessons/ssa-babynames-excel-find-22-beyonces.png)
+
+You can hit the __Find Next__ button again to make sure there are no other data entries with Beyonce (e.g. if there is a record for boys named Beyonce), but this row, row #5784 appears to be the lone Beyonce record.
+
+
+# We're done...?
+
+Well, that was some fun trivia. But think of all the questions we _can't_ easily answer:
+
+- What was the first year in which "Beyonce" showed up as a baby name nationwide? Baby names have to have a minimum of 5 (per sex) to show up in this data set.
+- If "Beyonce" was a baby name in past years, are the 22 in 2014 _more or less_ than past years?
+- What about babies named after after other uniquely-named entertainers, such as __Kanye__?
+
+## Do we really care?
+
+To be clear, it's not that answering these questions is impossible. But even when we restrict the search to just Beyonce, for _each year_, we have to repeat all of the steps, starting from ["Searching the data"](#searching-the-data). You have to be really obsessed with Beyonce and babies to go that far.
+
+## A better way
+
+But maybe Beyonce is worth it, so you proceed to open up 100+ babyname files and slowly work your way to a future visit to the carpal-tunnel-fixing doctor.
+
+Or, you think, "There must be a better way." I demonstrate a more efficient walkthrough next that performs the exact functionality in this lesson, except via the command-line interface. If it's your first time with the CLI, it will most definitely _not_ seem easier than what I've described.
+
+That's fine, the unfamiliar _should_ seem more difficult than what you've done for years past. But worry less about being familiar, and notice these things:
+
+- How much less instruction is needed
+- How much fewer pictures are needed
+- etc etc TK
