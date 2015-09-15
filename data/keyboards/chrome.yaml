@@ -24,13 +24,31 @@
     Moves cursor to allow you to type directly into the __Search Bar__.
   image: /files/images/keyboards/chrome/open-location.gif
 
-- title: Close tab/window
-  keys: [Command, W]
-  description: |
-    Closes just the current tab or, if only one tab is open, the browser window.
 
-- title: Open last tab/window
+- title: Close tab
+  keys: [Command, W]
+  priority: 1
+  description: |
+    Closes just the current tab or, if only one tab is open, the browser window. Being able to quickly close tabs is the first step to fighting your webpage hoarding tendencies.
+
+- title: Re-open just-closed tab
   keys: [Command, Shift, T]
   description: |
-    Re-opens the last tab or window that you closed. Handy for when you accidentally close something you wanted to keep.
+    Re-opens the last tab or window that was most recently closed. Handy for when you accidentally close something you wanted to keep.
   image: /files/images/keyboards/chrome/open-last-tab.gif
+
+- title: Hard refresh
+  keys: [Command, Shift, R]
+  description: |
+    Does a "hard" reload of the webpage, forcing the browser to fetch a page's files rather than using the cache. This shortcut is __absolutely critical__ if you intend to do any kind of web production. Though it's better to configure your Developer Tools to force the cache to clear.
+
+- title: View source
+  keys: [Command, Alt, U]
+  description: |
+    For the occasional times that you need to view the raw source of the webpage, this shortcut is only slightly faster than right-clicking and selecting __View Page Source__ from the pop-up menu.
+
+- title: Open Developer Tools
+  keys: [Command, Alt, I]
+  description: |
+    You may find yourself opening the Developer Tools more frequently via right-clicking an selecting __Inspect Element__.
+

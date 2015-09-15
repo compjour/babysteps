@@ -1,0 +1,23 @@
+<% keyboard.each do |key_combo| %>
+  <div class="combo <%="pri#{key_combo.priority || 0}"%>">
+    <div class="row">
+      <div class="col-sm-5">
+          <h4 class="title"><%= key_combo.title %></h4>
+          <div class="description">
+            <%= markdownify key_combo.description %>
+          </div>
+
+      </div>
+      <div class="col-sm-7">
+        <%= kbset(key_combo['keys']) %>
+<!--
+          <% if key_combo.image %>
+            <div class="mediawrap">
+              <img src="<%=key_combo.image%>">
+            </div>
+          <% end %>
+-->
+      </div>
+    </div>
+  </div>
+<% end %>

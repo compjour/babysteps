@@ -3,35 +3,33 @@ title: Keyboard Cheat Sheet
 ---
 
 <div id="cheatsheet-page">
-<section class="sec">
+  <section class="sec">
+    <h2>OS X</h2>
+    <p>These commands are general to the OS X operating system and deal with switching between all the programs you currently have open.</p>
 
-  <h2>Chrome Web Browser</h2>
+    <%= partial 'layouts/partials/keyboard_group', locals: {keyboard: data.keyboards.osx} %>
+  </section>
 
-    <% data.keyboards.chrome.each do |key_combo| %>
-      <div class="combo">
+  <section class="sec">
+    <h2>Finder</h2>
+    <p>The <a href="https://en.wikipedia.org/wiki/Finder_(software">Finder application</a>) is the point-and-click way to get around your file system and is basically always open when using OS X.
+    </p>
 
-        <div class="row">
-          <div class="col-sm-5">
-              <h4 class="title"><%= key_combo.title %></h4>
-              <div class="description">
-                <%= markdownify key_combo.description %>
-              </div>
+    <%= partial 'layouts/partials/keyboard_group', locals: {keyboard: data.keyboards.finder} %>
+  </section>
 
-          </div>
-          <div class="col-sm-7">
-            <%= kbset(key_combo['keys']) %>
-<!--
-              <% if key_combo.image %>
-                <div class="mediawrap">
-                  <img src="<%=key_combo.image%>">
-                </div>
-              <% end %>
- -->
-          </div>
-        </div>
-      </div>
-    <% end %>
 
-</section>
+  <section class="sec">
+    <h2>Chrome Web Browser</h2>
+    <p>For the average computer user, learning keyboard shortcuts for the web browser is a gateway drug for learning shortcuts in all the applications you'll ever use. These shortcuts work in the Google Chrome browser, but are nearly universal across all major browsers.</p>
 
+    <%= partial 'layouts/partials/keyboard_group', locals: {keyboard: data.keyboards.chrome} %>
+  </section>
+
+  <section class="sec">
+    <h2>Text Editing</h2>
+    <p>These commands refer to most programs in which you are creating, editing, or deleting text, including Microsoft Word, Excel, and plain text editors such as Atom and Sublime Text. Some of the project-level commands only apply to <a href="https://atom.io/">Atom</a> and <a href="http://www.sublimetext.com/">Sublime Text</a>.</p>
+
+    <%= partial 'layouts/partials/keyboard_group', locals: {keyboard: data.keyboards['text-editing']} %>
+  </section>
 </div>

@@ -1,0 +1,9 @@
+- title: Move into the parent folder
+  keys: [Command, Up]
+  description: |
+    I usually click my way through a list of folders. But I always use this shortcut to move "back" (or rather, __up__) the folder tree.
+
+- title: Go to folder
+  keys: [Command, Shift, G]
+  description: |
+    Pops open a dialog box in which you can type in any folder destination -- you can also use __Tab__ to autocomplete, as if you were in Terminal. This command is extremely useful when you need to dig into a system folder such as `/tmp`

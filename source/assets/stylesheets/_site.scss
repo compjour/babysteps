@@ -13,6 +13,11 @@ body{
 #cheatsheet-page{
   .combo{
     margin-bottom: 2.0em;
+    &.pri1{
+      .title{
+        color: #C00;
+      }
+    }
 
     .title{
       margin-top: 0;

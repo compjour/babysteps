@@ -1,0 +1,61 @@
+
+
+- title: Save
+  keys: [Command, S]
+  description: |
+    Although catastrophic computer crashes are rare, hitting this combo should almost be a reflex. I find myself hitting it just about every time I finish a line.
+
+- title: Undo
+  keys: [Command, Z]
+  description: |
+    Probably the single best reason why iPhones/iPads, with their shake-me-like-a-Polaroid-to-undo feature, will never be as suitable for editing as a full keyboard.
+
+- title: Redo
+  keys: [Command, Shift, Z]
+  description: |
+    Just as important as __Undo__. I don't know how many shakes it takes to do a redo on the iPhone.
+
+- title: Select All
+  keys: [Command, A]
+  description: |
+    Highlight the entire contents of a file. Usually preceded by a __Copy__-to-clipboard command, or any other keystroke to wipe out the contents.
+
+
+- title: Copy to clipboard
+  keys: [Command, C]
+  description: |
+    Copies the currently selected text to the clipboard. Frequently followed by a __Paste__ command.
+
+- title: Paste from clipboard
+  keys: [Command, V]
+  description: |
+    Pastes the contents of the clipboard to the current cursor position.
+
+- title: Cut to clipboard
+  keys: [Command, X]
+  description: |
+    Removes the current selection, but copies it to the clipboard.
+
+- title: Find in current file
+  keys: [Command, F]
+  description: |
+    In most text/word editors, this brings up a dialog/pop-up box in which you type a term to search for.
+
+
+- title: Find and replace in current file
+  keys: [Command, Alt, F]
+  description: |
+    Same as __Command-F__ to find text in a file, but with the additional option of specifying replacement text for the found text.
+
+- title: "Find (and optionally, replace) across project"
+  keys: [Command, Shift, F]
+  description: |
+    In a text editor such as Sublime Text or Atom, in which a project, i.e. a folder of files, can be opened in a session, this opens up a search dialog that will find a term across all of the project's files.
+
+
+- title: Find file in project by filename
+  keys: [Command, T]
+  priority: 1
+  description: |
+    Perhaps the most essential command when working with a folder of files in Sublime Text or Atom. This brings up a search box and autocompletes the name of a file as you start typing it in. If you don't memorize this command, you will drive yourself crazy trying to find files by clicking through tabs or the folder structure.
+

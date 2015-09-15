@@ -1,0 +1,14 @@
+---
+title: Shakespeare and Regular Expressions
+---
+
+
+
+http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt
+
+```
+ag 'Ham\.' t8.shakespeare.txt | wc -l
+ag -io 'love\w+' t8.shakespeare.txt
+ag -io '\w{16,}' t8.shakespeare.txt
+ag -io '[a-z\-]{16,}' t8.shakespeare.txt
+```

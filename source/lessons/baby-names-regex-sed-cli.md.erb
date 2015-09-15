@@ -1,0 +1,158 @@
+---
+title: Baby names sed cli
+---
+
+Recall that in the [last lesson](#TK), we were able to use __ag__ and __tr__ to add the filename of each record as a "column":
+
+~~~sh
+$ ag "Beyonce," --nogroup  --nonumber *.txt | tr ':' ','
+~~~
+
+Which gets us this:
+
+~~~
+yob1998.txt,Beyonce,F,18
+yob1999.txt,Beyonce,F,67
+yob2000.txt,Beyonce,F,197
+yob2001.txt,Beyonce,F,353
+~~~
+
+But we'd rather have this:
+
+~~~
+1998,Beyonce,F,18
+1999,Beyonce,F,67
+2000,Beyonce,F,197
+2001,Beyonce,F,353
+~~~
+
+
+The `tr` command only replaces one character at a time. With the __sed__ command, we can find-and-replace a string (or pattern) of characters. The __sed__ command is essentially its own mini-language, one that I've never gotten beyond the basics of.
+
+For our purposes, there are 3 components of sed that we care about:
+
+- Its __substitution__ feature -- which is specified by the letter `s` 
+- The pattern we want to _match_: `.txt:` 
+- What we want to _replace_ the match with: `,`
+
+In the example below, the __forward-slash__, e.g. `/`, is used to separate those 3 components. If it looks mind-boggling dense, don't worry, that's just about everyone's first impression:
+
+~~~sh
+$ ag "Beyonce," --nogroup  --nonumber *.txt | sed s/.txt:/,/
+~~~
+
+The result:
+
+~~~
+yob1998,Beyonce,F,18
+yob1999,Beyonce,F,67
+yob2000,Beyonce,F,197
+yob2001,Beyonce,F,353
+yob2002,Beyonce,F,153
+~~~
+
+Not bad. Now we just need to get rid of the `yob` at the beginning of the line. We can do this by using _another_ pipe to connect _another_ sed substitution. 
+
+This time, we'll use a little regex syntax and use the __carat__ special character, i.e. `^`, to specify that we want the `yob` at the _beginning_ of each line (in case we ever deal with a name in which the pattern `yob` appears, though I can't imagine when that might happen with American baby names...).
+
+In the example below, I've made a new line after each pipe to make the command a little clearer:
+
+~~~sh
+$ ag "Beyonce," --nogroup  --nonumber *.txt | 
+    sed s/.txt:/,/ |
+    sed s/^yob//
+~~~
+
+The output:
+
+~~~
+1998,Beyonce,F,18
+1999,Beyonce,F,67
+2000,Beyonce,F,197
+2001,Beyonce,F,353
+2002,Beyonce,F,153
+2003,Beyonce,F,206
+~~~
+
+Bingo.
+
+## What about Kanye?
+
+Now that we're mixing in regular expressions, let's add a regular expression to the __ag__ command: let's look for `"Beyonce,"` _or_ `"Kanye"`:
+
+~~~sh
+$ ag "Beyonce,|Kanye," --nogroup  --nonumber *.txt | 
+    sed s/.txt:/,/ |
+    sed s/^yob//
+~~~
+
+Here's the sample output:
+
+~~~
+2001,Beyonce,F,353
+2002,Beyonce,F,153
+2002,Kanye,M,5
+2003,Beyonce,F,206
+2003,Kanye,M,87
+2004,Beyonce,F,175
+2004,Kanye,F,19
+2004,Kanye,M,507
+2005,Beyonce,F,106
+~~~
+
+## What's up with the pipe?
+
+In the previous command, the __pipe__ character has two different effects:
+
+- `"Beyonce,|Kanye,"` - a regex special character that let's us specify `"Beyonce,"` __or__ `"Kanye,`
+- `ag ... | sed ... | sed` - a pipe character that connects the output of multiple commands.
+
+How does the shell interpreter know the difference? In the first usage, the `|` is within quotes. Quotation marks are a way to denote a _literal_ character string, or, in this case, a regular expression. The shell interpreter doesn't treat the pipe as a "Unix pipe". However, _outside_ the quotes, the pipe is no longer treated as just a character (or regex character). The interpreter sees the `|` between `ag` and `sed` and interprets it as the user wanting to pipe from `ag` to `sed`.
+
+Conversely, this putting those pipes inside quotation marks would render this command nonsensical:
+
+~~~sh
+$ ag "Beyonce,|Kanye," --nogroup  --nonumber *.txt "|" sed s/.txt:/,/    
+~~~
+
+There's not much more to say here that wouldn't require going much deeper into the concept of programming. But if you've heard programmers complain about how they accidentally wiped out their hard drive because of a single punctuation mark, it's probably not an exaggeration.
+
+## Game of Thrones
+
+It's very trivial to add new names to the search. Let's add a fictional name: [Daenerys](https://en.wikipedia.org/wiki/Daenerys_Targaryen), from Game of Thrones, and while we're here, let's add her adopted title, _Khaleesi_. Then pipe it all to a CSV file.
+
+Before we do that, remember how the CSV file doesn't come with column names? We have to add a header row ourselves in the spreadsheet. Or, we could do it via command line with the __echo__ command, which literally just repeats the same text you pass into it. But here, we redirect its output to a new file:
+
+~~~sh
+$ echo "year,name,sex,count" > newnames.csv
+~~~
+
+Then we run the sequence of `ag` and `sed` piped commands, but we use the "double-shovel" operator, `>>`, to specify that we want to _append_ data to `newnames.csv`, rather than completely overwrite it:
+
+~~~sh
+$ ag "(Beyonce|Kanye|Daenerys|Khaleesi)," --nogroup  --nonumber *.txt | 
+  sed s/.txt:/,/  | sed s/^yob//  >> newnames.csv
+~~~
+
+(Note the use of __parentheses__ in the regex to specify the order of operations, i.e. not have to type in 4 separate commas.)
+
+For this example, I've uploaded the CSV file to __Google Sheets__ -- via the web browser, as there is no built-in command line tool to do such a thing. I've created a [pivot table](https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/edit#gid=1374974573) using the __name__ for columns and the __year__ for rows:
+
+![image](/files/images/lessons/beyonce-kanye-GOT-googlecharts.png)
+
+The resulting [line chart](https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/pubchart?oid=2144635759&format=interactive):
+
+<iframe src="https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/pubchart?oid=2144635759&amp;format=interactive"></iframe>
+
+You can see the final form of the spreadsheet as hosted on Google Sheets:
+
+- The [imported CSV](https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/edit#gid=1316969129)
+- The [pivot table](https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/edit#gid=1374974573)
+- The [line chart](https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/pubchart?oid=2144635759&format=interactive)
+
+
+
+
+
+
+

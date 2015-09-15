@@ -25,12 +25,15 @@ KbSpecialKeys = {
   "Shift" => %Q{<span class="kbkey shift" data-value="Shift">shift</span>},
   "Right" => %Q{<span class="kbkey right" data-value="Right">►</span>},
   "Left" => %Q{<span class="kbkey left" data-value="Left">◄</span>},
+  "Up" => %Q{<span class="kbkey up" data-value="Up">▲</span>},
+  "Down" => %Q{<span class="kbkey down" data-value="Down">▼</span>},
+
   "~" => %Q{<span class="kbkey tilde" data-value="~"><span class="symbol">~</span>`</span>}
 
 
 }
 
-# ▼▲
+#
 
 
 def kb_plus

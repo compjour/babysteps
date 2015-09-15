@@ -1,6 +1,26 @@
-- title: Switch applications
-  keys: [Cmd, Tab]
+- title: Cycle through open applications
+  keys: [Command, Tab]
+  priority: 1
+  description: |
+    If you memorize only one keyboard shortcut for daily use, it should be this one. It's difficult enough as it is to multi-task, but it's substantially worse if it takes you several seconds (and accumulated wrist-strain) just to switch between apps with your mouse.
+
+- title: Reverse-cycle through open applications
+  keys: [Command, Shift, Tab]
+  description: |
+    Cycles through applications from right-to-left. I rarely use this because when you hit __Command+Tab__ once, OS X will switch you to the last active application. If I have to hit __Command+Tab__ more than twice, to the point where going right-to-left saves me time, it means I have too many applications open.
 
 - title: Switch windows within an application
-  keys: [Cmd, ~]
+  keys: [Command, "~"]
+  description: |
+    This is most useful within a web browser, where you may have more than one window open (i.e. one full of "work" and research tabs, the other for your Instafacechatumblr activities).
+
+- title: Close a window
+  keys: [Command, W]
+  description: |
+    Close a single tab or window of an application.
+
+- title: Quit application
+  keys: [Command, Q]
+  description: |
+    Shuts down the current app. Try not to get overzealous with this one.
 

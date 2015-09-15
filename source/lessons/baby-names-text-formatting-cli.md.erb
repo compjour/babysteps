@@ -1,0 +1,250 @@
+---
+title: Baby names power tools cleansing TK
+---
+
+
+
+# Problem
+
+We need to turn the output from the [last lesson](#TK):
+
+~~~
+yob1998.txt
+5602:Beyonce,F,18
+
+yob1999.txt
+2217:Beyonce,F,67
+
+...
+
+yob2013.txt
+4894:Beyonce,F,28
+
+yob2014.txt
+5784:Beyonce,F,22
+~~~
+
+
+To something we can move right into Excel to visualize, i.e. comma-delimited format:
+
+```
+
+
+```
+
+
+Download the files as before.
+
+
+By default, when running __ag__ on multiple files, it will visually group the matches, putting each match under the respective file name. And it will also print out the line number:
+
+```
+yob2000.txt
+1054:Beyonce,F,197
+15367:Beyoncee,F,5
+
+yob2001.txt
+700:Beyonce,F,353
+
+...
+```
+
+Under the file __yob2000.txt__, we see that __"Beyonce"__ appears on __line 1054__, and __"Beyoncee"__ appears on __line 15367__.
+
+The __ag__ command has several options for modifying its output, which you can see by running `man ag` at the prompt. Reading documentation and the command line can be pretty intimidating even if you _like_ walls of text. Here are the relevant options:
+
+```
+--[no]break
+      Print a newline between matches in different files. Enabled by default.
+
+--[no]filename
+      Print file names. Enabled by default, except when searching a single file.
+
+--[no]group
+      The default, --group, lumps multiple matches in the same file together, and presents them under a single occurrence
+      of the filename. --nogroup refrains from this, and instead places the filename at the start of each match line.
+
+--[no]numbers
+      Print line numbers. Default is to omit line numbers when searching streams.
+```
+
+Try a few out for yourself. Here's one example; note how I've changed the search from `"Beyonce"` to `"Beyonce,"` to avoid getting "Beyoncee" for now:
+
+~~~sh
+ag "Beyonce," --nofilename --nobreak  *.txt
+~~~
+
+~~~
+Beyonce,F,18
+Beyonce,F,67
+Beyonce,F,197
+Beyonce,F,353
+Beyonce,F,153
+Beyonce,F,206
+Beyonce,F,175
+Beyonce,F,106
+Beyonce,F,106
+Beyonce,F,185
+Beyonce,F,105
+Beyonce,F,79
+Beyonce,F,51
+Beyonce,F,39
+Beyonce,F,36
+Beyonce,F,28
+Beyonce,F,22
+~~~
+
+
+## First visualization
+
+That looks pretty good. There is one major problem with it, but before moving on, let's just move this to Excel. 
+
+You can do it the old-fashioned way: copy-and-paste it into a text file, save that file with a `.csv` extension (e.g. `beyonce.csv`), then open it with Excel.
+
+__Or, you could be a power user:__ 
+
+~~~sh
+$ ag "Beyonce," --nofilename --nobreak  *.txt > beyonce.csv
+$ open beyonce.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.app/
+~~~
+
+The first line __redirects__ the output (i.e. with the `>`) of the __ag__ command into a file named `beyonce.csv`. This is a very powerful and fundamental pattern in shell programming; be careful because the redirection operator, `>`, will wipe out whatever file it is pointing to.
+
+The second line uses the __open__ command to open `beyonce.csv`, along with the `-a` option to specify that I want to open it with Excel. Note that the path to your Excel may be different. How did I find that convoluted path for myself? I started off knowing that it would be somewhere in `/Applications/` and then __Tab__ed (i.e. autocompleted) my way to Excel.
+
+If you don't have the Excel, again, you can try OS X's Numbers.app:
+
+~~~sh
+$ open beyonce.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.app/
+~~~
+
+Anyway, when you open `beyonce.csv` in your spreadsheet of choice, you'll notice that it apparently takes the `.csv` extension as a cue that those commas mean something, i.e. they are meant to separate the data into columns.
+
+I'm putting in least amount of effort possible to make an Excel chart:
+
+![image](/files/images/lessons/beyonce-simple-graph.png)
+
+You'll notice that the labels are nonsensical. But at least we have a visualization of the trend for Beyonce.
+
+# Getting back the years
+
+The major flaw of the previous example is that output of our __ag__ command does not include the years of each record. The Social Security Administration's system doesn't include the year with each line, probably because they think having the year in the __filename__ is enough (because who needs to look at more than one year at a time, right?)
+
+This trivial detail actually makes it __extremely difficult__ to do a multi-year analysis of the data -- without using the power tools we've touched on so far, or a bit of custom programming.
+
+In the next lesson, I'll show how to use a few more shell tools and fundamentals, combined with regular expressions, to build a data set suitable for analysis and visualization -- within seconds. 
+
+For now, let's just incrementally improve what we have by altering the options to the __ag__ command. Since the year is encoded into the _filename_ of each record, we need to keep the filenames. So run __ag__ with just the `--nogroup` (and _don't_ redirect to the beyonce.csv file for now):
+
+~~~sh
+$ ag "Beyonce," --nogroup  *.txt
+~~~
+
+
+~~~
+yob1998.txt:5602:Beyonce,F,18
+yob1999.txt:2217:Beyonce,F,67
+yob2000.txt:1054:Beyonce,F,197
+yob2001.txt:700:Beyonce,F,353
+yob2002.txt:1281:Beyonce,F,153
+~~~
+
+Let's add the `--nonumber` option to remove the line numbers:
+
+~~~sh
+ag "Beyonce," --nogroup  --nonumber *.txt
+~~~
+
+~~~
+yob1998.txt:Beyonce,F,18
+yob1999.txt:Beyonce,F,67
+yob2000.txt:Beyonce,F,197
+yob2001.txt:Beyonce,F,353
+yob2002.txt:Beyonce,F,153
+~~~
+
+Pretty close. Remember that Excel needs __commas__ to determine the column structure of the data. The easiest way to fix this is to change those __colons__, e.g. `:`, to __commas__.
+
+So redirect the previous __ag__ command to a file:
+
+~~~sh
+$ ag "Beyonce," --nogroup  --nonumber *.txt > whatev.csv
+~~~
+
+Then use the __tr__ to translate (i.e. _replace_) one character for another:
+
+~~~sh
+$ tr ':' ',' < whatev.csv
+~~~
+
+Note the use of the `<` operator, which directs the contents of a file into a command. It's not one that I use often, however. And in this situation, most shell scripters will use the __pipe operator__, e.g. `|`:
+
+~~~
+yob1998.txt,Beyonce,F,18
+yob1999.txt,Beyonce,F,67
+yob2000.txt,Beyonce,F,197
+yob2001.txt,Beyonce,F,353
+yob2002.txt,Beyonce,F,153
+yob2003.txt,Beyonce,F,206
+yob2004.txt,Beyonce,F,175
+yob2005.txt,Beyonce,F,106
+yob2006.txt,Beyonce,F,106
+yob2007.txt,Beyonce,F,185
+yob2008.txt,Beyonce,F,105
+yob2009.txt,Beyonce,F,79
+yob2010.txt,Beyonce,F,51
+yob2011.txt,Beyonce,F,39
+yob2012.txt,Beyonce,F,36
+yob2013.txt,Beyonce,F,28
+yob2014.txt,Beyonce,F,22
+~~~
+
+Go ahead and copy-paste that into a text file, and open in Excel. Or you could try to add a redirection operator to that __tr__ command to send its output to `beyonce.csv`...note that this syntax can be very confusing. In fact, I almost never use it myself:
+
+~~~sh
+$ tr ':' ',' < whatev.csv > beyonce2.csv
+$ open beyonce2.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.app/
+~~~
+
+
+I'm not going to cover the Excel-fu that it takes to make the following graph, except that it requires knowledge of the _Select Data_ feature and the syntax for specifying the "Category" field. It's not important right now, but here's a sample visualization:
+
+![image](/files/images/lessons/beyonce-better-graph.png)
+
+
+# The Amazing Unix Pipe
+
+So, there are many things that are confusing and bewildering about shell scripting. To reiterate, the previous example of redirection is __not__ what I use, because of how confusing it looks even to me:
+
+~~~sh
+# Send ag's output to file named whatev.csv
+$ ag "Beyonce," --nogroup  --nonumber *.txt > whatev.csv
+# Translate whatev.csv, send output to beyonce2.csv
+$ tr ':' ',' < whatev.csv > beyonce2.csv
+~~~
+
+Instead, I use the __pipe operator__, `|`, which sends the output from one command directly into another. It's the same concept as the `>` redirection operator, except it doesn't point to a name of a file. The above example, with the pipe, can be simplified to this:
+
+
+~~~sh
+$ ag "Beyonce," --nogroup  --nonumber *.txt | 
+    tr ':' ',' > beyonce2.csv
+~~~
+
+Note how the `whatev.csv` intermediary file is unnecessary, as we can create `beyonce2.csv` in what feels like one command. 
+
+And this concept of chaining simple multiple tools together to do something complicated is at __the heart of why we program__. The Social Security Administration didn't package their data with easy analysis in mind. Excel didn't create a way to deal with hundreds of files because most of its users don't need that functionality.
+
+So when you want to find out something unique, you have to _do_ something unique. This is why we tolerate the complexity of power tools and programming.
+
+In the next lesson, we continue practicing the concept of pipes, while learning a couple more shell tools and incorporating some regular expression power to go beyond Beyonce.
+
+
+
+
+
+
+
+
+
+
