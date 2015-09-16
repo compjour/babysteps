@@ -1,19 +1,221 @@
 ---
-title: Shakespeare and Regular Expressions
+title: An introduction to regular expressions with Shakespeare
 ---
 
 
-Download Project Gutenberg's complete works of Shakespeare:
-
-http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt 
 
 
 
+Download -- or copy and paste -- Project Gutenberg's complete works of Shakespeare from the following URL:
+
+[http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt)
+
+## Bring up the Find menu
+
+##### In Atom
+
+In the menubar, you can either click on __Find > Find in Buffer__. 
+
+Or better yet, just use the keyboard shortcut: __Command + F__ 
+
+The __Find Panel__ should pop up at the bottom of the window:
+
+![image](/files/images/lessons/atom-find-panel.jpg)
+
+###### Activate regex in Atom
+
+To activate the use of regular expressions in Atom's find, click the button that has the dot-asterisk symbol: `.*`. Clicking it should highlight it (in a too subtle way). There is some text in the right side of the Find panel that should read something like:
+
+      Finding with Options: Regex
+
+![image](/files/images/lessons/atom-find-panel-regex.jpg)
+
+##### In Sublime Text
+
+In the menubar, click __Find > Find...__. Or rather, use the keyboard shortcut: __Command + F__. In Sublime Text, you'll probably find yourself hitting __Command + Option + F__, as it brings up the option to do a __Find and Replace__.
+
+Sublime Text's button to enable regular expressions looks like Atom's, with the dot-asterisk symbol, `.*`, except annoyingly small and even more difficult to tell if it's clicked:
 
 
-```
-ag 'Ham\.' t8.shakespeare.txt | wc -l
-ag -io 'love\w+' t8.shakespeare.txt
-ag -io '\w{16,}' t8.shakespeare.txt
-ag -io '[a-z\-]{16,}' t8.shakespeare.txt
-```
+![image](/files/images/lessons/sublime-text-find-regex.jpg)
+
+## Search for a word with Find
+
+A regular expression is just a _pattern of text_. If your pattern is simply the literal word, `Enter`, then the text editor's __Find__ function works just as it does in any other word processor you've used. Just type `Enter` into the Find box and hit the __Find button__.
+
+If you performed a __case-insensitive__ search, you would've found __2,519__ instances of the word `Enter` in the Shakespearean text. 
+
+## Search for a regex with Find
+
+Finding the _literal_ pattern of characters that make the word `Enter` -- you already knew how to do that. To use a regular expression, you just have to use the special characters that have special meaning in the regex syntax. What are those characters? Too many to learn in a single session. So rather than point you to a cheat sheet or reference, I'll demonstrate the concept with a few examples.
+
+##### Finding "Enter" at the beginning of a line
+
+In the __Find__ box, type a __carat__ before the word `Enter`:
+
+      ^Enter
+
+When _not_ searching for a regex, the editor would attempt to find that _literal_ pattern -- and it won't find any in the text. However, in __regex mode__, the editor interprets the `^` _not_ as a _literal_ carat, but as the symbol that means: "_Look for the beginning of a line_"
+
+With this regex pattern, the search results only include `Enter` -- __602__ instances -- when it appears at the beginning of a line:
+
+![image](files/images/lessons/atom-regex-enter.png)
+
+##### The word "enter" followed by letters
+
+Sometimes we only want a pattern that is part of a word. What words have the pattern `enter`, followed by more letters? The words `enters`, `entered`, `entertain` come to mind. Here's how to match them with a regex:
+
+      enter\w
+
+In this example, the letter `w` is not interpreted as a _literal_ `w`. Instead, that __backslash__ character -- `\` -- _modifies_ the meaning of whatever character follows it. In this case, the regex `\w` means: _match any alphanumeric character_, e.g. `A`, `z`, `9`, as well as the __underscore__ character, `_`.
+
+Note: if you have the __case-insensitive__ option turned on, it shouldn't matter if the pattern is `enter\w` or `ENTER\w`.
+
+
+##### The word "enter" following other letters
+
+What about words in which `enter` follows other letters? To be honest, no examples immediately come to me. But we can find out by modifying the previous pattern to put `\w` _before_ `enter`:
+
+      \wenter
+
+At first, it looks like we're searching for the word, `wenter`. But again, the backslash operator turns that `w` into something else _besides_ a _literal_ `w`. In all of Shakespeare, this pattern appears just __9__ times, mostly within the word `carpenter`.
+
+
+##### Just the word "enter"
+
+In real world text-mining, we often care about a specific word, such as `eat`, while not caring for `peat` or `Eaton`. The pattern `\b` denotes a __word boundary__, such as a hyphen, dot, comma, apostrophe, space, and beginning and end of a line:
+
+      \benter\b
+
+##### Repetition
+
+The pattern `\d` acts as a stand-in for __any numerical digit__. What if we want to find all instances of 4-digits in a row? We can simply repeat the pattern 4 times:
+
+      \d\d\d\d
+
+Of course, this seems like something in which there _must_ be a better way. And there is: __curly braces__ are interpreted as specifying a specific number of matches of the preceding token. To find four-digit numbers with curly brace notation:
+
+      \d{4}
+
+If we want _any_ sequence of digits, whether it's just a single digit or 20 digits in a row, the __plus sign__ is interpreted as: __one or more of the preceding token__:
+
+      \d+
+
+
+##### Character sets and alternation
+
+Shakespeare often uses _apostrophes_ in place of letters; compare the variations of the word "never"
+
+> May you a better feast never behold
+> 
+> Come, come, beshrew your heart! You'll ne'er be good
+> 
+> Nev'r did poor steward wear a truer grief
+
+If we wanted to find all instances in which Shakespeare means "never", we could of course do three separate searches. However, with the __pipe__ operator -- `|` -- which is interpreted as __or__, we can fit multiple variations into one search:
+
+    never|nev'r|ne'er
+
+However, in real world situations, we often just don't _know_ what the exact variations are. But we may know, generally, what they _could_ be. If you only knew that the 3rd and 4th characters of `never` might either (or both) be `'` or `e` or `v`, you could use the pipe operator and then use __parentheses__ to specify the grouping (in the way that parentheses are used in arithmetic to specify priority of operations):
+
+    ne(v|e|'){2}r
+
+
+The use of __square brackets__ can be used to more concisely express a set of alternate characters:
+
+    nev[ve']{2}r
+
+In many real world documents, we're often interested in numbers that might represent amounts of money, e.g. `$500` and `$1,300,555.99`, i.e. a combination of numbers, dots, and commas. Here's a sloppy, but quick pattern that's usually good enough:
+
+    [0-9.,]
+
+There's a lot of other ways to express a range of characters, but it's good enough for now just to know that you can do that type of search.
+
+
+##### Escaping special characters
+
+I'll close with one more important concept: what if we want to match a character, _literally_, that has a special meaning as regex? For example, the __dot character__, which I haven't mentioned, is a regex character that will match __anything__. For example, the following pattern will find all instances in which the letter `h` is followed by __any character__, and then followed by the letter `m`:
+
+      h.z
+
+This would match text strings such as "...with zealous..." and "__haz__ard". But what if I want to find the word `ham` followed by a _literal_ period, such as a sentence that ends with `ham`, or, as is the convention in the Gutenberg text, `Ham.`, to denote lines spoken by the character Hamlet?
+
+To specify the _literal_ meaning of a character -- often referred to as __escaping__ a character, we simply prepend a __backslash__:
+
+      ham\.
+
+What if we want to match a _literal backslash_? Just precede a backslash with a backslash:
+
+      \\
+
+
+
+# Replacing with regex
+
+Although regexes are useful enough just for finding text, they are incredibly useful when you need to replace a pattern. For example, we could replace all the variations of `never` in one swoop. When it comes to data cleaning -- an all too common chore in data work -- regular expressions can do quick work.
+
+For example, in the Shakespeare text we've downloaded, you've probably noticed that most lines have their first characters not flush against the beginning of the line:
+
+~~~
+Enter two GENTLEMEN, at several doors
+
+  FIRST GENTLEMAN. Whither away so fast?
+  SECOND GENTLEMAN. O, God save ye!
+    Ev'n to the Hall, to hear what shall become
+~~~
+
+How would you convert that text to this (not that you would want to):
+
+~~~
+Enter two GENTLEMEN, at several doors
+
+FIRST GENTLEMAN. Whither away so fast?
+SECOND GENTLEMAN. O, God save ye!
+Ev'n to the Hall, to hear what shall become
+~~~
+
+Even if you don't remember the exact syntax, you should aspire to think about this problem in patterns:
+
+- We want to "replace" (or rather, _delete_) only the spaces that occur at the __beginning of the line__.
+- Each line to be adjusted has __one or more__ of these spaces in a row.
+
+After you've thought it through, then you can look up the specific syntax. For this scenario, all the regex you need has been covered in this lesson:
+
+(Warning: there are more than 100,000+ such matches...attempting this regex may cause your computer to slow to a crawl)
+
+![image](files/images/lessons/atom-regex-replace-space.png)
+
+
+
+
+
+# Know that there are patterns
+
+This should feel like a __staggering__ amount of things to memorize. Because it is. Regular expressions are a _language_, albeit a relatively small one. So it can take years to attain a working memorization of it. 
+
+But you don't have to memorize it; most people don't. It's more than enough to just _know_ that this flexible searching power exists.
+
+You can move on to the [command-line version of this lesson](/lessons/shakespeare-cli-regex), which includes more examples of useful regex. Or to the more real-world example involving a search through [State Secretary Hillary Clinton's emails](/lessons/hillary-clinton-emails-grep).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

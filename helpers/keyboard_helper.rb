@@ -7,7 +7,7 @@ def kbkey(key_val)
 end
 
 
-def kbset(*key_vals)
+def kbcombo(*key_vals)
   ckeys = key_vals[0].is_a?(Array) ? key_vals[0] : key_vals
   content_tag('div', :class => 'kbs') do
     s = ActiveSupport::SafeBuffer.new

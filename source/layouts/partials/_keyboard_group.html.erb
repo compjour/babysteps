@@ -1,5 +1,5 @@
 <% keyboard.each do |key_combo| %>
-  <div class="combo <%="pri#{key_combo.priority || 0}"%>">
+  <div class="keycombo <%="pri#{key_combo.priority || 0}"%>">
     <div class="row">
       <div class="col-sm-5">
           <h4 class="title"><%= key_combo.title %></h4>
@@ -9,7 +9,7 @@
 
       </div>
       <div class="col-sm-7">
-        <%= kbset(key_combo['keys']) %>
+        <%= kbcombo(key_combo['keys']) %>
 <!--
           <% if key_combo.image %>
             <div class="mediawrap">

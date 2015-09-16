@@ -5,8 +5,8 @@ https://dl.dropboxusercontent.com/u/921159/Keyboard/page1.html
 /* Micro Clearfix by Nicolas Gallagher - http://nicolasgallagher.com/micro-clearfix-hack */
         /* For modern browsers */
 
-.kbs:before, .kbs:after {content:""; display:table;}
-.kbs:after {clear:both;}
+.kbcombo:before, .kbcombo:after {content:""; display:table;}
+.kbcombo:after {clear:both;}
 
 $key-size-factor: 1.5;
 $key-base-height: 44px;
@@ -114,7 +114,7 @@ $key-base-padding: 5px;
   &.up, &.down, &.left, &.right{
     height: $key-base-height / 2 * $key-size-factor;
     padding-top: $key-base-padding / 2 * $key-size-factor;
-    margin-top: 35px;
+    margin-top: 20px;
   }
 }
 
