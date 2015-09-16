@@ -1,0 +1,277 @@
+---
+title: Command-line intro to regex and Shakespeare
+---
+
+This lesson follows roughly the same track as the [lesson that introduces regex via text editor](/lessons/shakespeare-gui-regex). Except the command-line is a lot more fun. And it won't choke on 100,000+ line files.
+
+### Notes
+
+##### Use your keyboard
+
+A friendly reminder to use your keyboard as much as possible. In fact, you might be able to get through this whole lesson without touching your mouse.
+
+Here are the most relevant shortcuts from the [keyboard cheatsheet](/cheatsheets/keyboard):
+
+Use __Alt + Tab__ to switch between the browser you're using to read this page and the Terminal.
+
+###### Inside the terminal 
+
+- Use __Tab__ to autocomplete filenames and programs
+- Use the __Up__ key to cycle through recent commands.
+- Use __Control + L__ to clear the screen.
+- Use __Control + C__ to get back to a "normal" prompt if you end up with an unclosed pair of quote marks or brackets.
+
+##### Quick caveats about grep and ag and OS X
+
+As in other exercises on this site, I'm using __ag__ ("[the silver searcher](https://github.com/ggreer/the_silver_searcher)"), which is similar to [__ack__](http://beyondgrep.com/). Both support [Perl-compatible regular expressions](http://www.pcre.org/). Depending on how your OS X system is set up, its grep (the BSD variant) [may have the option of Perl regex](https://wiki.freebsd.org/BSDgrep) via `-P` (and if you're on Linux, you can probably figure it out for yourself) -- but I don't want to pretend I actually know the ins-and-outs of OS X's setup.
+
+The short of it is: most if not all of the following examples can be done in whatever __grep__-variant you're using. I just don't have the time to translate all the different options. So get used to using `man grep`.
+
+If you're on your own OS X computer, try to install __ag__ using the Homebrew packager, [which might be its own adventure](http://brew.sh/).
+
+------------
+
+# Getting the data
+
+Pop open your __Terminal__ and change into some directory where you don't mind storing junk (`/tmp` is my goto place). There's no need to use your web browser to download the text file of Shakespeare's works:
+
+
+~~~sh
+# downloading and renaming the downloaded file to "shakespeare.txt"
+$ wget http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt -O shakespeare.txt
+~~~
+
+We can use the `wc` program to get a quick word/line/byte count:
+
+~~~sh
+$ wc shakespeare.txt
+
+#   124456  901325 5458199 shakespeare.txt
+~~~
+
+
+# Search text via the command line
+
+Remember that regular expressions are a _mini-language_ -- they aren't the _thing_ that actually searches the text, they're just a way to describe text patterns we want to search for.
+
+##### Find "enter", normally
+
+At the command-line, __ag__ is the thing that searches the text. Which means we can use it to find plain old-fashioned literal patterns, such as the word `"enter"`:
+
+~~~sh
+$ ag enter shakespeare.txt
+~~~
+
+Your output should look like this:
+
+![showing ag and enter](/files/images/lessons/ag-cli-enter-shakespeare.gif)
+
+Note: by default, __ag__'s search is __case-insensitive__ (this actually surprised me, because that's not __grep__'s default behavior).
+
+##### Find "enter" at the beginning of a line
+
+Now let's do a search with regex. The __carat__ symbol is used to match the __beginning of a line__. To find the word `"enter"` only when it appears at the beginning of a line:
+
+~~~sh
+$ ag ^enter shakespeare.txt
+~~~
+
+You can repeat the regex examples from the [text editor version of this lesson](/lessons/shakespeare-gui-regex), including how to match the different versions of the word `"never"`:
+
+~~~sh
+$ ag "ne(v|e|'){2}r" shakespeare.txt 
+~~~
+
+Take careful note of how I used double-quote marks to enclose the pattern. Enclosing the pattern in quotes is _necessary_ in this example because some of its characters are special _also_ to the shell.
+
+# The importance of quote-marks at the command-line
+
+OK, this part is going to be a bit confusing and frustrating if you're new to the command line and programming in general.
+
+Remember that regular expressions are just a language in which certain characters are defined as "special", such as how the __dot__ stands for "any character". But __Bash__, the language of the shell, is _also_, well, a language, and it has its own definition of "special characters".
+
+In order to __not__ have Bash interpret a character in a regex pattern as a __Bash character__, we need to enclose the pattern in quote marks. If possible, try to use __single quotes__:
+
+~~~sh
+$ ag '\w+$' shakespeare.txt
+~~~
+
+What happens when your pattern contains a single quote? You can enclose the pattern in __double-quotes__:
+
+~~~sh
+$ ag "\w+'d" shakespeare.txt
+~~~
+
+_However_, __double-quotes__ cause their own issues, because Bash will attempt to interpret special characters within a quoted string (for the most part, this involves the __dollar-sign__ character). If this sounds like a terrible summary of the [movie Inception](http://www.imdb.com/title/tt1375666/) -- yes, it __is__ very confusing. It's not possible to really understand until you become a better programmer and have some experience with how different syntaxes interact. The fundamental principle involves parsing, i.e. the way computers construct meaning from our text input by reading one character at a time, left to right, and keeping track of the order and context.
+
+So if this confuses you, it's not that you're dumb, but it's that computers are just _simple_. Even so, keeping track of things can be aggravating even to experienced programmers. 
+
+For now, just keep in mind that quote marks are tricky things. In all subsequent examples, I will be using quote marks to enclose the search patterns. If you get confused and the shell doesn't appear to be responding to your commands, remember that you always have __Control + C__.
+
+# Using ag's options to filter the output
+
+Let's do a more interesting search: __what's the longest word used in all of Shakespeare?__
+
+There's not an easy way to have __ag__ deliver the answer to us (not without using additional programming that's frankly, not super practical for its complexity). But we _can_ use __ag__ to narrow down the possible choices of "longest" word. 
+
+For example, we'd expect the "longest word" to be in the group of words that are at least 15 characters long. We also assume that not too many words are that long, and so we'll be able to eyeball the winner:
+
+~~~sh
+$ ag "\w{15,}" shakespeare.txt
+~~~
+
+Note the regex pattern of `{15,}` is a variation on `{15}` -- the orphan comma allows us to specify: _find 15-or-more matches of the previous token_
+
+This regex returns a decent number of results:
+
+~~~
+...
+
+117575:    Strength'ned by interchangement of your rings;
+119312:    Could penetrate her uncompassionate sire-
+119681:    And notwithstanding all her sudden quips,
+121222:    And mannerly distinguishment leave out
+122090:    Yet, for this once, yea, superstitiously,
+122461:    As I seem now. Their transformations
+123317:    and in the hottest day prognostication proclaims, shall he be set
+124083:  As often shrieking undistinguished woe,
+~~~
+
+By default, __ag__ displays the _entire line_ in which a match is found. By using the option `-o`, we can tell __ag__ to just show only what the regex matches. So using `-o` in this case means showing only words of 15-characters-or-longer:
+
+~~~sh
+$ ag -o "\w{15,}" shakespeare.txt
+~~~
+
+
+The output is a little easier to read:
+
+~~~
+...
+interchangement
+uncompassionate
+notwithstanding
+distinguishment
+superstitiously
+transformations
+prognostication
+undistinguished
+~~~
+
+
+By using the `-c` option, we can tell __ag__ just to output the __count of matches found__:
+
+~~~sh
+$ ag -o -c "\w{15,}" shakespeare.txt
+# shakespeare.txt:83
+~~~
+
+I don't feel like reading 83 words. So let's just increase the minimum number of characters in our pattern from __15__ to __17__:
+
+~~~sh
+$ ag -o "\w{17,}" shakespeare.txt
+
+# honorificabilitudinitatibus
+# Anthropophaginian
+# undistinguishable
+# undistinguishable
+# indistinguishable
+~~~
+
+Looks like `honorificabilitudinitatibus` is the winner by a long shot. But in what context is it used? Let's search for it literally and remove the `-o` option:
+
+~~~sh
+$ ag 'honorificabilitudinitatibus'  shakespeare.txt
+# 65487:    not so long by the head as honorificabilitudinitatibus; thou art
+~~~
+
+The __ag__ tool has a convenient flag, conveniently named `-C`, that will show the two lines _before_ and _after_ each match:
+
+~~~sh
+$ ag -C 'honorificabilitudinitatibus'  shakespeare.txt
+# 65485-  COSTARD. O, they have liv'd long on the alms-basket of words. I
+# 65486-    marvel thy master hath not eaten thee for a word, for thou are
+# 65487:    not so long by the head as honorificabilitudinitatibus; thou art
+# 65488-    easier swallowed than a flap-dragon.
+# 65489-  MOTH. Peace! the peal begins.
+~~~
+
+Shakespeare has been known to use __hypens__ and __apostrophes__ to creatively construct compound words. Instead of just looking for _word characters_, i.e. with the token `\w`, let's use a [__character set__](http://www.regular-expressions.info/charclass.html) to search for the longest word among sequences of letters, hyphens, and/or apostrophes. 
+
+We'll leave out the `-o` and the `-C` options (which are mutually exclusive anyway) and let __ag__ show the matches within their own lines. We also expect the longest word to be at least 25 characters long or however many characters `honorificabilitudinitatibus` is:
+
+~~~sh
+$ ag "[a-z\-']{25,}" shakespeare.txt
+
+# 25549:    tragical-historical, tragical-comical-historical-pastoral; scene  
+# 65487:    not so long by the head as honorificabilitudinitatibus; thou art
+# 113338:    magnanimous and most illustrious six-or-seven-times-honour'd
+~~~
+
+What's with the backslash-hypen, e.g. `\-`? Remember when I said we have to be wary of characters that are special within regex syntax _and_ Bash syntax? As it turns out, _within_ regex syntax, certain characters have different meanings when __inside braces__, such as curly or square brackets, and parentheses. TKdelete
+
+
+Inside square brackets, a hypen is used to denote a range of characters to match, e.g. `[a-r]` will match all alphabetical characters from the letter `a` to the letter `r`. To specify a literal hyphen in our character set, we use the __backslash__ (as usual) to escape it.
+
+
+# Combining with other tools
+
+The power of the command line comes from connecting independent tools together, particularly with the __pipe operator__. While we know how to use __ag__ to find all words 7-characters-or-longer, how might we find Shakespeare's __most used word__ that is 7-characters or longer? It can't be done with __ag__ alone. But we can get the answer using the tools __tr__, __sort__, __uniq__, and __head__:
+
+I'll let you Google (or `man`) these commands for yourself. But I'll show how to iteratively add each step, and you can observe the output of each iteration for yourself:
+
+Print all lines that contain at least one word that is 7-characters-or-longer:
+
+~~~sh
+$ ag '\w{7,}' shakespeare.txt
+~~~
+
+Print just the words that are 7-characters or longer:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt
+~~~
+
+
+Print just the words that are 7-characters or longer, then make them lower case:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:]
+~~~
+
+Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort
+~~~
+
+
+Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+    uniq -c
+~~~
+
+Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears, then sort _that_ list in reverse numerical order:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+    uniq -c | sort -rn
+~~~
+
+
+Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears, then sort _that_ list in reverse numerical order, then print only the very first line:
+
+~~~sh
+$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+    uniq -c | sort -rn | head -n 1
+~~~
+
+Whew. If that seemed like a lot of work, it _was_. What we've created here is what anyone would call a __program__; it takes a large text dump and winnows it down to the one key insight we care about. Note how easy it is to re-run this program with a different parameter, e.g. Shakespeare's most 9-letter-or-longer word.
+
+# Get past the syntax
+
+Hopefully though all the confusing syntax, you got an idea of how useful regular expressions can be and just how quickly (after you've figured out what the heck is going on) command-line tools can rip through data files.
+
+Even if you love Shakespeare, it probably doesn't seem worth it to do this much work just to win a Shakespearean trivia contest. Continue on to the [lesson on searching Secretary Clinton's email](/lessons/hillary-clinton-emails-grep) for a more real-world scenario.
