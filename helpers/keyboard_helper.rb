@@ -9,7 +9,7 @@ end
 
 def kbcombo(*key_vals)
   ckeys = key_vals[0].is_a?(Array) ? key_vals[0] : key_vals
-  content_tag('div', :class => 'kbs') do
+  content_tag('div', :class => 'kbcombo') do
     s = ActiveSupport::SafeBuffer.new
     keys_html = ckeys.map{ |kval| kbkey(kval) }
     s.safe_concat keys_html.join(kb_plus)

@@ -1,12 +1,12 @@
 ---
-title: Baby names power tools cleansing TK
+title: Cleaning up and visualizing the baby name data
 ---
 
-
+This lesson expands on the previous introduction to [CLI and babies named Beyonce](/lessons/baby-steps-cli). We get some experience with learning how command-line tools such as __ag__ can be configured. And we get some hands-on practice with the concept of piping output from one program to another, and then to a file that's ready to send to Excel.
 
 # Problem
 
-We need to turn the output from the [last lesson](#TK):
+In the last lesson, we were able to find all years in which Beyonce was reported as a baby name. The [output looked like this](/lessons/baby-steps-cli):
 
 ~~~
 yob1998.txt
@@ -24,17 +24,15 @@ yob2014.txt
 5784:Beyonce,F,22
 ~~~
 
-
-To something we can move right into Excel to visualize, i.e. comma-delimited format:
-
-```
+That's pretty good, especially if we just need to answer a few questions, such as what year was peak Beyonce_. But, first of all, the length of the text output is kind of a pain to scroll through (imagine if Beyonce had started her career in the 1960s). Second, with a little more work, we can get this data into __CSV format__ and then import it into a spreadsheet.
 
 
-```
+# Being finicky about text
+
+Download and unzip the baby names data file as in [the previous lesson](/lessons/baby-steps-cli). If you jumped right into this lesson, you shouldn't have to do anything. But run the `pwd` and then the `ls` command just to make sure you are where you _think_ you are.
 
 
-Download the files as before.
-
+## Using ag across multiple files
 
 By default, when running __ag__ on multiple files, it will visually group the matches, putting each match under the respective file name. And it will also print out the line number:
 
@@ -47,9 +45,12 @@ yob2001.txt
 700:Beyonce,F,353
 
 ...
+
+yob2014.txt
+5784:Beyonce,F,22
 ```
 
-Under the file __yob2000.txt__, we see that __"Beyonce"__ appears on __line 1054__, and __"Beyoncee"__ appears on __line 15367__.
+The only file that needs a "group" is __yob2000.txt__, because that year saw the names "Beyonce" and "Beyoncee", on lines `1054` and `15367`, respectively.
 
 The __ag__ command has several options for modifying its output, which you can see by running `man ag` at the prompt. Reading documentation and the command line can be pretty intimidating even if you _like_ walls of text. Here are the relevant options:
 
@@ -101,7 +102,9 @@ That looks pretty good. There is one major problem with it, but before moving on
 
 You can do it the old-fashioned way: copy-and-paste it into a text file, save that file with a `.csv` extension (e.g. `beyonce.csv`), then open it with Excel.
 
-__Or, you could be a power user:__ 
+_Or_, you could be a __power user__: 
+
+All that mouse-clicking to open a file is annoying. Let's use the commands to make and open a text file from the command line.
 
 ~~~sh
 $ ag "Beyonce," --nofilename --nobreak  *.txt > beyonce.csv
@@ -110,15 +113,17 @@ $ open beyonce.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.app
 
 The first line __redirects__ the output (i.e. with the `>`) of the __ag__ command into a file named `beyonce.csv`. This is a very powerful and fundamental pattern in shell programming; be careful because the redirection operator, `>`, will wipe out whatever file it is pointing to.
 
+__I'll repeat again:__ be __incredibly careful__ about how you use the `>` operator. By default, it won't warn you if it's pointing to an already existing file before destroying and overwriting it.
+
 The second line uses the __open__ command to open `beyonce.csv`, along with the `-a` option to specify that I want to open it with Excel. Note that the path to your Excel may be different. How did I find that convoluted path for myself? I started off knowing that it would be somewhere in `/Applications/` and then __Tab__ed (i.e. autocompleted) my way to Excel.
 
 If you don't have the Excel, again, you can try OS X's Numbers.app:
 
 ~~~sh
-$ open beyonce.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.app/
+$ open beyonce.csv -a /Applications/Numbers.app
 ~~~
 
-Anyway, when you open `beyonce.csv` in your spreadsheet of choice, you'll notice that it apparently takes the `.csv` extension as a cue that those commas mean something, i.e. they are meant to separate the data into columns.
+After you open `beyonce.csv` in your spreadsheet of choice, you'll notice that it apparently takes the `.csv` extension as a cue that those commas mean something, i.e. they are meant to separate the data into columns.
 
 I'm putting in least amount of effort possible to make an Excel chart:
 
@@ -207,7 +212,7 @@ $ open beyonce2.csv -a /Applications/Microsoft\ Office\ 2011/Microsoft\ Excel.ap
 ~~~
 
 
-I'm not going to cover the Excel-fu that it takes to make the following graph, except that it requires knowledge of the _Select Data_ feature and the syntax for specifying the "Category" field. It's not important right now, but here's a sample visualization:
+I'm not going to cover the Excel-fu that it takes to make the following graph, except that it requires knowledge of the _Select Data_ feature and the syntax for specifying the "Category" field. I'll let you learn Excel on your own, but here's a sample visualization:
 
 ![image](/files/images/lessons/beyonce-better-graph.png)
 
@@ -237,10 +242,7 @@ And this concept of chaining simple multiple tools together to do something comp
 
 So when you want to find out something unique, you have to _do_ something unique. This is why we tolerate the complexity of power tools and programming.
 
-In the next lesson, we continue practicing the concept of pipes, while learning a couple more shell tools and incorporating some regular expression power to go beyond Beyonce.
-
-
-
+In the next lesson, we continue practicing the concept of pipes, while learning a couple more shell tools and incorporating some regular expression power to go beyond even Beyonce.
 
 
 

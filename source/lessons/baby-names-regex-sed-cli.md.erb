@@ -1,8 +1,19 @@
 ---
-title: Baby names sed cli
+title: Exploring the baby names data with regular expressions
 ---
 
-Recall that in the [last lesson](#TK), we were able to use __ag__ and __tr__ to add the filename of each record as a "column":
+
+This lesson expands on the previous lessons with the baby names and CLI, and adds in some examples of how regular expressions makes it even more fun. The code and concepts actually get pretty dense. This lesson may not be feasible given the scope of this walkthrough, so don't feel bad if it's overwhelming. 
+
+In the end, we produce a chart based on the trendlines for multiple names:
+
+<iframe src="https://docs.google.com/spreadsheets/d/1zpYIwKPZcBCcR3hCKVLTs-ZvQKHfo_LqHtwuju33KSo/pubchart?oid=2144635759&amp;format=interactive"></iframe>
+
+
+
+# Substitution techniques
+
+Recall that in the [last lesson](/lessons/baby-names-cleaning-cli), we were able to use __ag__ and __tr__ to add the filename of each record as a "column":
 
 ~~~sh
 $ ag "Beyonce," --nogroup  --nonumber *.txt | tr ':' ','

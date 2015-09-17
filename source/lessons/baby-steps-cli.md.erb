@@ -18,15 +18,13 @@ Things to know:
 
 # Setting up our environment
 
-## Open your apps
+You should have only 3 applications open:
 
-Open:
-
-- Chrome (you're probably already on it)
+- Finder (which is always open)
+- A web browser (which you are presumably reading this from)
 - Terminal
-- Finder (this is always open on OS X)
 
-Notice that we don't need to open up Excel.
+Notice that we don't have to open up Excel.
 
 
 ## Practice your keyboarding
@@ -42,11 +40,15 @@ Use __Tab__, when in Terminal, to do auto-complete.
 <%= kbcombo("Tab") %>
 
 
-# Getting the data
 
-TK How we get the data
 
-## Making a new directory
+## Create a working folder
+
+Switch to Terminal. One of the things we can now easily control is exactly where we download the data file and unzip it, instead of having the browser dump it into `~/Downloads`.
+
+I generally like using the `/tmp` directory for testing things out, as its contents get deleted on a regular basis.
+
+Let's make a subdirectory inside of `/tmp`, then change into it and do our work from there:
 
 ~~~sh
 $ cd /tmp                # Change into /tmp/ directory
@@ -61,28 +63,30 @@ $ mkdir /tmp/babynames    # Make the directory /tmp/babynames
 $ cd /tmp/babynames       # Change into /tmp/babynames
 ~~~
 
-Use the __pwd__ command ("print working directory") to make sure you're in the right place:
+It is very, very easy to not realize or remember where you are at the command-line, such as when you take a bathroom break. The __pwd__ command is your best friend.
+
+The __pwd__ command ("print working directory") is your best friend. Frequently execute it to make sure you're in the right place before running a command that adds/deletes files:
 
 ~~~sh
 $ pwd
 # /tmp/babynames
 ~~~
 
-## Download the file with wget
 
-Let's assume we already know the URL of the zip file:
 
-[http://www.ssa.gov/oact/babynames/names.zip](http://www.ssa.gov/oact/babynames/names.zip)
+# Getting the data
+
+Instead of visiting the SSA's webpage and clicking on the `names.zip` URL, we can just __curl__ its URL directly:
+
+[`http://www.ssa.gov/oact/babynames/names.zip`](http://www.ssa.gov/oact/babynames/names.zip)
 
 ~~~sh
-$ wget http://www.ssa.gov/oact/babynames/names.zip
+$ curl -O http://www.ssa.gov/oact/babynames/names.zip
 ~~~
 
 A little progress bar should pop up. Depending on how fast your Internet connection is, the download might take a few minutes.
 
-TK
-
-Is the file even there? Let's confirm it the "old-fashioned" way by using the __open__ command, followed by a __dot__ (i.e., a period) -- the dot stands for "current directory":
+After the download completes, how do we know if the file is even there? Let's confirm it the "old-fashioned" way by using the __open__ command, followed by a __dot__ (i.e., a period) -- the dot stands for "current directory":
 
 ~~~sh
 $ open .
@@ -97,13 +101,15 @@ This should pop open the friendly Finder window where we can see the lone `names
 
 Don't double-click the __names.zip__ file to unzip it. Rather, switch back to the Terminal (again, use the __Command-Tab__ shortcut). 
 
-Then type the command `unzip`...but _before_ pressing __Enter__ -- did you already forget the name of the file you downloaded? Remember to hit __Tab__ -- heck, even if you remember the name of the file, hit __Tab__ anyway out of habit. Unless `/tmp/babynames` was not already empty, the downloaded file name _should_ auto-complete:
+Then type the command `unzip`, followed by a space, then the name of the downloaded file. 
+
+Did you already forget the name of the file you downloaded? Then just hit __Tab__. Even if you remember the name of the file, hit __Tab__ just to get into the habit. Unless `/tmp/babynames/` was not already empty, the downloaded file name _should_ auto-complete as `names.zip`:
 
 ~~~sh
 $ unzip names.zip
 ~~~
 
-Run the command by hitting __Enter__; you should see the list of files zip by. Re-run the command that opens up the `/tmp/babynames` folder in Finder to verify that the files showed up.
+Run the command by hitting __Enter__; you should see the list of files zip by. Re-run the `open` command that opens up the `/tmp/babynames` folder in Finder to verify that the files showed up.
 
 Or, you can think to yourself, "_Gee, finding out if files are in a directory seems like a very common task. There must be a better way!_".
 
@@ -123,8 +129,19 @@ Let's replicate the work in the point-and-click tutorial by finding "Beyonce" in
 $ ag Beyonce yob2014.txt
 ~~~
 
+And there's our answer; we even get what the line number is:
+
+~~~
+5784:Beyonce,F,22
+~~~
 
 ## Repeat, change, repeat
+
+Remember that in the previous lesson, one (major) problem was that in order to find Beyonce in the other years, we'd have to [re-open and search Excel for each file](/lessons/baby-steps-gui#do-we-really-care). That process is so inconvenient that interesting questions -- such as what year did Beyonce first show up as a baby name -- are incredibly tedious to answer. Most (sane) people won't even try.
+
+Well, we might have to repeat the call to __ag__ -- but that only requires a quick tap of the __Up__ key and changing the year. So we can do a wide search for Beyonce fairly easily.
+
+Try it yourself:
 
 ~~~sh
 $ ag Beyonce yob2013.txt
@@ -132,19 +149,48 @@ $ ag Beyonce yob2012.txt
 $ ag Beyonce yob2011.txt
 ~~~
 
-TKGIF
+![img](/files/images/lessons/ag-beyonce-times.gif)
 
 ## The power of the wildcard
 
+Programming is hard to learn, but one of the reasons we do it is because, once we've identified a pattern in the very tedious work that we want to do, we can unleash the full power of the computer on it. And the computer never complains.
+
+If you find yourself repeating a command over and over, there is almost always a better way. In this case, we can use the __asterisk__, which the Bash language interprets as a __wildcard__ in the context of the file system.
+
+The following command would perform the __ag__ search for `Beyonce` across all files in the current directory with an extension of `.txt`:
+
 ~~~sh
-$ ag Beyonce yob2014
+$ ag Beyonce *.txt
 ~~~
 
+Do we know that there aren't other text files that _aren't_ baby name data files? We can always use a more specific pattern:
 
+~~~sh
+$ ag Beyonce yob*.txt
+~~~
 
+Searching 100+ text files can now be done under a second:
+
+![img](/files/images/lessons/ag-all-the-beyonces.gif)
+
+To find the answer, we just have to scroll up through the output and find the first match:
+
+~~~
+yob1998.txt
+5602:Beyonce,F,18
+~~~
+
+1998, just a year after [Destiny's Child became known as "Destiny's Child"](https://en.wikipedia.org/wiki/Beyonc%C3%A9#Career). Not bad. 
 
 # We're done...?
 
+In this short lesson, we started off with the intention of repeating the work of the [previous lesson](/lessons/baby-steps-gui). And once we reached that milestone, as slow as it might have been, it took us literally seconds to go far beyond the original mark.
 
-- [Visualizing in Excel](/TK)
-- [Regular expression searching](/TK)
+That's the promise of power tools and programming: a lot harder to start off with, but much more freedom to explore and work with data.
+
+Even though we found the answer in regards to Beyonce, the skilled data journalist's mind immediately starts asking other questions: what year did we reach peak Beyonce? And how does it compare to Kanye? Or Taylor? And how do we make a chart out of this?
+
+The following lessons expand on our use of __ag__ and serve a deeper introduction to the flexibility -- and quirks -- of shell scripting: 
+
+- [Visualizing the baby name trends in Excel](/lessons/baby-names-cleaning-cli) - It'd be great if we could turn our data explorations into charts. And since data visualizations only require that we create structured data, such as a CSV file, let's see if there's an automated way to turn the output we have to far into CSV.
+- [Exploring the baby names with regular expressions](/lessons/baby-names-regex-sed-cli/) - It's pretty easy to manually rip through our commands and produce chartable results for many other people. But let's put regular expressions into use to make it even easier.

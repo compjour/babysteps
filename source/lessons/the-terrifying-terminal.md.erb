@@ -126,7 +126,7 @@ $ say -v Deranged hello world
 
 This is a good chance to practice some [keyboard shortcuts](/cheatsheets/keyboard#keys-terminal-shell). Follow these steps:
 
-- By now, your Terminal should be filled with a bunch of text from past commands. To clear the screen, hit __Control + K__
+- By now, your Terminal should be filled with a bunch of text from past commands. To clear the screen, hit __Control + L__
 - Your Terminal should now be clear except for the prompt. But don't think you've lost your work; run the __history__ command to see the most recent past commands.
 - Do you need to re-run a command that you _just_ ran? Hit the __Up__ key.
 - When you use __Up__ to recall past commands, it leaves the cursor at the end of the line. Hit __Control + A__ to make the cursor jump to the beginning, if you need to edit something near the beginning.
@@ -134,6 +134,80 @@ This is a good chance to practice some [keyboard shortcuts](/cheatsheets/keyboar
 In the GIF below, I use the __Up__ key to recall a previous `say` command, then __Control + A__ to move the cursor to the beginning, and then I add a new voice option:
 
 ![img](/files/images/lessons/cli-deranged-bop.gif)
+
+
+# Standard input and output
+
+Remember the humble command of __echo__?
+
+![img](/files/images/lessons/cli-hello-again.gif)
+
+Note how the __say__ command produces _audio_, but does not print anything to screen when it runs. This characteristic of producing text output -- often referred to as [__standard output__, or __stdout__](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29) -- is a very important feature for command-line programs.
+
+The designers of Unix realized that they could reduce the complexity of their operating system if programmers didn't have to worry _where or how exactly_ their programs received their __input__ -- whether by keyboard, punch card, or another program -- or their __output -- e.g. monitor, printer, disk drive, or another program.
+
+# The powerful pipe
+
+So what are the implications of this when it comes to __echo__ and __say__?
+
+By default, the standard output goes to screen. The program __say__ does not follow that convention -- but that kind of makes sense, since the purpose of __say__ is to produce __audio__. But what if we connected __echo__ to __say__ so that instead of _printing to screen_, the output of __echo__ went straight into __say__?
+
+The __pipe operator__ -- `|` -- is how we connect command-line programs together. Try this:
+
+~~~sh
+$ echo hey there | say
+~~~
+
+Note how nothing is output to screen after __echo__ and __say_ complete their jobs; the output of __echo__ -- `hey there` `` has been "piped" into __say__, which also means we don't have to pass anything separately into __say__.
+
+This is a trivial example because it required _more_ typing to do the same thing as this:
+
+~~~sh
+$ say hey there
+~~~
+
+## The fun of curl
+
+But what if there was a program that could pull in input from a massive source of data -- for example, _the Internet_ -- and then pipe it into __say__?
+
+We already know how to fetch data from the web using our web browsers. Visit the URL below for a snippet of T.S. Elliot's _The Waste Land_ that I've posted onto the web:
+
+[`http://babysteps.compjour.org/files/data/wasteland.txt`](http://babysteps.compjour.org/files/data/wasteland.txt)
+
+The [__curl__](http://curl.haxx.se/) program, installed on OS X and most Linux systems by default, let's us download files from the command line. Try this out:
+
+~~~sh
+$ curl http://babysteps.compjour.org/files/data/wasteland.txt
+~~~
+
+![img](/files/images/lessons/curl-waste.gif)
+
+The __curl__ program provides a convenience of a progress bar, which is more noticeable when downloading a bigger file, but otherwise behaves like a classic Unix program by dumping its contents to __standard output__, i.e. your screen.
+
+But like __echo__, we can pipe __curl__ directly into __say__, and configure __say__ to use its `Moira` voice:
+
+~~~sh
+$ curl http://babysteps.compjour.org/files/data/wasteland.txt | say -v Moira
+~~~
+
+That's a bit of fun (remember you can hit __Ctrl + C__ to break out of a long-running program). But what if we wanted to download from an _actual_ data source? __curl__ doesn't care, just give it a URL. And what if we wanted to do something more interesting than make our computer read data to us, such as sorting, searching, filtering, emailing, tweeting, analyzing, etc? Then we find different programs to pipe to.
+
+The command-line interface is unarguably simple. But that simplicity is its strength, as it allows you to connect powerful programs to do exactly what you need to do. Now, it's just a matter of learning about all those other programs. And all the quirks of the Bash language. And...many things far beyond the scope of this introduction.
+
+# Be careful!
+
+If this is your first introduction to the command-line, by no means think that you have even a basic practical grasp of shell scripting. It is as complicated to learn as programming _because it is programming_.
+
+
+
+
+
+
+
+
+
+
+ And, conversely programs printed their output to: whether it was to a printer, to the screen, to a
 
 
 
