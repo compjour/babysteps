@@ -3,6 +3,9 @@
 
 A computational walkthrough for Stanford Journalism bootcamp.
 
+http://babysteps.compjour.org
+
+
 (under construction)
 
 
