@@ -2,15 +2,84 @@
 title: Grepping Through State Secretary Clinton's Emails
 ---
 
-
 See [production notes here](/notes/hillary-clinton-emails-notes).
+
+Given a set of emails between an unknown number of senders about an unknown number of topics, what are the kind of things we would like to find out quickly?
+
+- The emails with the word "CLASSIFIED" in them
+- All instances in which a number appears after a dollar sign.
+- Very short sentences that might suggest a curt reply.
+- The most frequent recipients of emails
+- The most frequent senders of the emails
+- If the batch of emails have a bunch of frequent but _expected_
+participants, then who are the _least_ frequent senders and recipients?
 
 
 Fetch the zip file (using wget, your browser, Himalayan sherpa) from this URL:
 
-http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip
+[http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip](http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip)
 
-Unzip it, then open the resulting folder in your text editor (e.g. Atom or Sublime Text):
+Then unzip it. Here's a sequence of commands that works for me:
+
+~~~sh
+# make a new temp directory if it doesn't already exist
+$ mkdir -p /tmp/emailstuff
+# change into the directory
+$ cd /tmp/emailstuff
+# Download the file
+$ wget http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip
+# unzip it
+$ unzip clinton_email_august_pdf_w_text.zip
+# open the resulting folder with Finder
+$ open clinton_email_august_pdf_w_text/
+~~~
+
+This is what the folder of unzipped files looks like in __Finder__:
+
+![image](/files/images/lessons/clinton_email_tmp_folder_finder.png)
+
+You'll notice that each PDF file has a corresponding text file. Open a PDF and its corresponding text file:
+
+![image of PDF and text](/files/images/lessons/clinton_email_tmp_pdf_and_txt.png)
+
+The text file is the result of me running a text-extraction command on each PDF. The details of this are not important ([but here you go](/notes/hillary-clinton-emails-notes)) -- the upshot is that we can run __ag__ across all the text files and, if we want to, we can view the PDF that the text file came from.
+
+## Dirty words
+
+Why do we need to see the PDF? This is related to the [production details](/notes/hillary-clinton-emails-notes) but _is_ important: the PDFs consist of scanned documents -- i.e. the State Department printed the emails _to paper_ and then scanned them back in. At some point, a __redaction__ is made to the email. The result is what we see in file `C05765907.pdf`:
+
+![image](/files/images/lessons/clinton_email_tmp_pdf_redaction_snippet.png)
+
+What does that look like in the text file, i.e. `C05765907.txt`? As you might imagine, the plain text format has no obvious way of indicating a visual redaction:
+
+![image](/files/images/lessons/clinton_email_tmp_pdf_redaction_snippet_text.png)
+
+If you've ever scanned in paper documents, you've probably noticed that they aren't crystal clear like a native digital document. Thus, the world's best text-extraction/optical-character-recognition program won't be crystal clear either.
+
+Check out file `C05778466.pdf` and its corresponding text extract. How many errors in the text file can you spot?
+
+![image](files/images/lessons/clinton_email_tmp_pdf_flawed_extract.png)
+
+No matter what it is we're looking for, it should be clear how regex lets us flexibly search for a text pattern will be very helpful here.
+
+
+##### The emails with the word "CLASSIFIED" in them
+
+We want all emails with `CLASSIFIED` (case-insensitive) though _not_ `UNCLASSIFIED`:
+
+~~~sh
+$ ag -i '\bCLASSIFIED' clinton_email_august_pdf_w_text/*.txt
+~~~
+
+TK example
+
+
+##### All numbers that follow a dollar sign
+
+~~~sh
+$ ag -i '\$\d+' clinton_email_august_pdf_w_text/*.txt
+~~~
+
 
 
 

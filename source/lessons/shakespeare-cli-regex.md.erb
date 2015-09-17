@@ -66,20 +66,20 @@ Your output should look like this:
 
 ![showing ag and enter](/files/images/lessons/ag-cli-enter-shakespeare.gif)
 
-Note: by default, __ag__'s search is __case-insensitive__ (this actually surprised me, because that's not __grep__'s default behavior).
+Note:  __ag__'s search is  __case-sensitive__ by default. _Except_ when the pattern is either all-upper/lowercase. Just to make sure __ag__ is matching case-_insensitively_, I will be using the `-i` flag in subsequent examples.
 
 ##### Find "enter" at the beginning of a line
 
 Now let's do a search with regex. The __carat__ symbol is used to match the __beginning of a line__. To find the word `"enter"` only when it appears at the beginning of a line:
 
 ~~~sh
-$ ag ^enter shakespeare.txt
+$ ag -i ^enter shakespeare.txt
 ~~~
 
 You can repeat the regex examples from the [text editor version of this lesson](/lessons/shakespeare-gui-regex), including how to match the different versions of the word `"never"`:
 
 ~~~sh
-$ ag "ne(v|e|'){2}r" shakespeare.txt 
+$ ag -i "ne(v|e|'){2}r" shakespeare.txt 
 ~~~
 
 Take careful note of how I used double-quote marks to enclose the pattern. Enclosing the pattern in quotes is _necessary_ in this example because some of its characters are special _also_ to the shell.
@@ -93,13 +93,13 @@ Remember that regular expressions are just a language in which certain character
 In order to __not__ have Bash interpret a character in a regex pattern as a __Bash character__, we need to enclose the pattern in quote marks. If possible, try to use __single quotes__:
 
 ~~~sh
-$ ag '\w+$' shakespeare.txt
+$ ag -i '\w+$' shakespeare.txt
 ~~~
 
 What happens when your pattern contains a single quote? You can enclose the pattern in __double-quotes__:
 
 ~~~sh
-$ ag "\w+'d" shakespeare.txt
+$ ag -i "\w+'d" shakespeare.txt
 ~~~
 
 _However_, __double-quotes__ cause their own issues, because Bash will attempt to interpret special characters within a quoted string (for the most part, this involves the __dollar-sign__ character). If this sounds like a terrible summary of the [movie Inception](http://www.imdb.com/title/tt1375666/) -- yes, it __is__ very confusing. It's not possible to really understand until you become a better programmer and have some experience with how different syntaxes interact. The fundamental principle involves parsing, i.e. the way computers construct meaning from our text input by reading one character at a time, left to right, and keeping track of the order and context.
@@ -117,7 +117,7 @@ There's not an easy way to have __ag__ deliver the answer to us (not without usi
 For example, we'd expect the "longest word" to be in the group of words that are at least 15 characters long. We also assume that not too many words are that long, and so we'll be able to eyeball the winner:
 
 ~~~sh
-$ ag "\w{15,}" shakespeare.txt
+$ ag -i "\w{15,}" shakespeare.txt
 ~~~
 
 Note the regex pattern of `{15,}` is a variation on `{15}` -- the orphan comma allows us to specify: _find 15-or-more matches of the previous token_
@@ -140,7 +140,7 @@ This regex returns a decent number of results:
 By default, __ag__ displays the _entire line_ in which a match is found. By using the option `-o`, we can tell __ag__ to just show only what the regex matches. So using `-o` in this case means showing only words of 15-characters-or-longer:
 
 ~~~sh
-$ ag -o "\w{15,}" shakespeare.txt
+$ ag -i -o "\w{15,}" shakespeare.txt
 ~~~
 
 
@@ -162,14 +162,14 @@ undistinguished
 By using the `-c` option, we can tell __ag__ just to output the __count of matches found__:
 
 ~~~sh
-$ ag -o -c "\w{15,}" shakespeare.txt
+$ ag -i -o -c "\w{15,}" shakespeare.txt
 # shakespeare.txt:83
 ~~~
 
 I don't feel like reading 83 words. So let's just increase the minimum number of characters in our pattern from __15__ to __17__:
 
 ~~~sh
-$ ag -o "\w{17,}" shakespeare.txt
+$ ag -i -o "\w{17,}" shakespeare.txt
 
 # honorificabilitudinitatibus
 # Anthropophaginian
@@ -181,7 +181,7 @@ $ ag -o "\w{17,}" shakespeare.txt
 Looks like `honorificabilitudinitatibus` is the winner by a long shot. But in what context is it used? Let's search for it literally and remove the `-o` option:
 
 ~~~sh
-$ ag 'honorificabilitudinitatibus'  shakespeare.txt
+$ ag -i 'honorificabilitudinitatibus'  shakespeare.txt
 # 65487:    not so long by the head as honorificabilitudinitatibus; thou art
 ~~~
 
@@ -201,7 +201,7 @@ Shakespeare has been known to use __hypens__ and __apostrophes__ to creatively c
 We'll leave out the `-o` and the `-C` options (which are mutually exclusive anyway) and let __ag__ show the matches within their own lines. We also expect the longest word to be at least 25 characters long or however many characters `honorificabilitudinitatibus` is:
 
 ~~~sh
-$ ag "[a-z\-']{25,}" shakespeare.txt
+$ ag -i "[a-z\-']{25,}" shakespeare.txt
 
 # 25549:    tragical-historical, tragical-comical-historical-pastoral; scene  
 # 65487:    not so long by the head as honorificabilitudinitatibus; thou art
@@ -223,40 +223,40 @@ I'll let you Google (or `man`) these commands for yourself. But I'll show how to
 Print all lines that contain at least one word that is 7-characters-or-longer:
 
 ~~~sh
-$ ag '\w{7,}' shakespeare.txt
+$ ag -i '\w{7,}' shakespeare.txt
 ~~~
 
 Print just the words that are 7-characters or longer:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt
+$ ag -i -o '\w{7,}' shakespeare.txt
 ~~~
 
 
 Print just the words that are 7-characters or longer, then make them lower case:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:]
+$ ag -i -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:]
 ~~~
 
 Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort
+$ ag -i -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort
 ~~~
 
 
 Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+$ ag -i -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
     uniq -c
 ~~~
 
 Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears, then sort _that_ list in reverse numerical order:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+$ ag -i -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
     uniq -c | sort -rn
 ~~~
 
@@ -264,7 +264,7 @@ $ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
 Print just the words that are 7-characters or longer, then make them lower case, then sort them alphabetically, then transform the list to show the number of times each unique word appears, then sort _that_ list in reverse numerical order, then print only the very first line:
 
 ~~~sh
-$ ag -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
+$ ag -i -o '\w{7,}' shakespeare.txt | tr [:upper:] [:lower:] | sort |
     uniq -c | sort -rn | head -n 1
 ~~~
 
