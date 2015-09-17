@@ -6,7 +6,7 @@ This lesson follows roughly the same track as the [lesson that introduces regex 
 
 ### Notes
 
-##### Use your keyboard
+#### Use your keyboard
 
 A friendly reminder to use your keyboard as much as possible. In fact, you might be able to get through this whole lesson without touching your mouse.
 
@@ -14,14 +14,14 @@ Here are the most relevant shortcuts from the [keyboard cheatsheet](/cheatsheets
 
 Use __Alt + Tab__ to switch between the browser you're using to read this page and the Terminal.
 
-###### Inside the terminal 
+#### Inside the terminal 
 
 - Use __Tab__ to autocomplete filenames and programs
 - Use the __Up__ key to cycle through recent commands.
 - Use __Control + L__ to clear the screen.
 - Use __Control + C__ to get back to a "normal" prompt if you end up with an unclosed pair of quote marks or brackets.
 
-##### Quick caveats about grep and ag and OS X
+#### Quick caveats about grep and ag and OS X
 
 As in other exercises on this site, I'm using __ag__ ("[the silver searcher](https://github.com/ggreer/the_silver_searcher)"), which is similar to [__ack__](http://beyondgrep.com/). Both support [Perl-compatible regular expressions](http://www.pcre.org/). Depending on how your OS X system is set up, its grep (the BSD variant) [may have the option of Perl regex](https://wiki.freebsd.org/BSDgrep) via `-P` (and if you're on Linux, you can probably figure it out for yourself) -- but I don't want to pretend I actually know the ins-and-outs of OS X's setup.
 
@@ -29,16 +29,17 @@ The short of it is: most if not all of the following examples can be done in wha
 
 If you're on your own OS X computer, try to install __ag__ using the Homebrew packager, [which might be its own adventure](http://brew.sh/).
 
+
 ------------
 
 # Getting the data
 
-Pop open your __Terminal__ and change into some directory where you don't mind storing junk (`/tmp` is my goto place). There's no need to use your web browser to download the text file of Shakespeare's works:
+Pop open your __Terminal__ and change into some directory where you don't mind storing junk (`/tmp` is my goto place). There's no need to use your web browser to click-and-download the text file of Shakespeare's works, just do it directly with __curl__. The `-o` option lets us specify a filename:
 
 
 ~~~sh
 # downloading and renaming the downloaded file to "shakespeare.txt"
-$ wget http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt -O shakespeare.txt
+$ curl http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt -o shakespeare.txt
 ~~~
 
 We can use the `wc` program to get a quick word/line/byte count:
@@ -166,6 +167,11 @@ $ ag -i -o -c "\w{15,}" shakespeare.txt
 # shakespeare.txt:83
 ~~~
 
+Quick note: for most shell programs, some of the single-letter flags (but _not all of them_) can be combined for brevity:
+
+        ag -ioc "\w{15,}" shakespeare.txt
+
+
 I don't feel like reading 83 words. So let's just increase the minimum number of characters in our pattern from __15__ to __17__:
 
 ~~~sh
@@ -208,8 +214,12 @@ $ ag -i "[a-z\-']{25,}" shakespeare.txt
 # 113338:    magnanimous and most illustrious six-or-seven-times-honour'd
 ~~~
 
-What's with the backslash-hypen, e.g. `\-`? Remember when I said we have to be wary of characters that are special within regex syntax _and_ Bash syntax? As it turns out, _within_ regex syntax, certain characters have different meanings when __inside braces__, such as curly or square brackets, and parentheses. TKdelete
+What's with the backslash-hypen, e.g. `\-`? Remember when I said we have to be wary of characters that are special within regex syntax _and_ Bash syntax? As it turns out, _within_ the world of regular expression syntax, certain characters have different meanings when __inside braces__, such as curly or square brackets, and parentheses. 
 
+[This is just TK](TK)
+
+
+Again, this is more minutae that you shouldn't attempt to memorize, but that you should be aware of because you need to be aware that, hey, languages are complicated things: 
 
 Inside square brackets, a hypen is used to denote a range of characters to match, e.g. `[a-r]` will match all alphabetical characters from the letter `a` to the letter `r`. To specify a literal hyphen in our character set, we use the __backslash__ (as usual) to escape it.
 

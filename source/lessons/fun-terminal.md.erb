@@ -1,0 +1,205 @@
+---
+title: Fun times with the Terminal
+---
+
+
+Note: this is a rough, context-less introduction to the OS X Terminal and shell scripting that only makes some sense when I was teaching it in person. Will fully revise it later.
+
+### Table of contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
+# Heads up warning
+
+If this is your first shell rodeo and you get through this and feel good about yourself, __do not__ actually think you know what's going on. Nobody really knows. [Not even Pixar](http://thenextweb.com/media/2012/05/21/how-pixars-toy-story-2-was-deleted-twice-once-by-technology-and-again-for-its-own-good/). Watch this video to see how even expert system programmers can accidentally but severely harm themselves with the shell:
+
+<iframe width="823" height="480" src="https://www.youtube.com/embed/8dhp_20j0Ys?rel=0" frameborder="0" allowfullscreen></iframe>
+
+Mitchell Cohen's [Eight Terminal Utilities Every OS X Command Line User Should Know](http://www.mitchchn.me/2014/os-x-terminal/) is the inspiration for this guide. Some of the commands he mentions you might find useful, particularly __open__ and __screencapture__. But be careful. And read up on the pitfalls of ["whitespace" and Bash](https://uvesway.wordpress.com/2013/03/11/some-whitespace-pitfalls-in-bash-programming/).
+
+
+
+# How to get to the Terminal
+
+The Terminal app can be found in __Finder__ by navigating to the __Applications__ folder, then __Utilities__:
+
+![image](files/images/lessons/terminal-app-folder.png)
+
+Since the Terminal is so keyboard-based, it's good to get ourselves [into the keyboard-shortcut mindset](/cheatsheets/keyboard#keys-terminal-shell) as quickly as possible. Finder has a keyboard shortcut for __Go to Folder__: __Command + Shift + G__. The input box will perform autocomplete for you if you hit __Tab__. Begin typing `/Ap`, and then hit __Tab__ to autocomplete to `/Applications`, then to its subdirectory of `Utilities/`, then to `Terminal.app`:
+
+![image](/files/images/lessons/terminal-app-goto-folder.png)
+
+Either way, double-click the __Terminal.app__ icon. If you're on your own computer, might as well drag that puppy to your dock, because you will be clicking it quite frequently.
+
+# The command line prompt
+
+Welcome to your shell! 
+
+You are now experiencing your operating system via a __command line interface__, often abbreviated as __CLI__. I've customized my Terminal settings so mine is going to look a little different than yours:
+
+![img](/files/images/lessons/cli-blinky.gif)
+
+That blinky box is the __cursor__, which signals that the CLI is waiting for you to type something. As soon as you start typing, characters will show up on the left of the cursor. Go ahead and type the classic `hello world` command:
+
+      hello world
+
+Note that the computer does not do anything _until you press the_ __Enter key__, which then signals to the computer: _"Hey, do the thing that I just typed at the prompt"_
+
+## Hello world?
+
+Unfortunately, the computer (at least as of OS X 10.10) by default doesn't know how to _do_ `hello world`; there's no built-in command named `hello` or `world`:
+
+![img](/files/images/lessons/cli-hello-world-oops.gif)
+
+However, the OS X shell _does_ know the `echo` command. Try this:
+
+      echo hello world
+
+What does __echo__ do? It "echoes" back the values  -- i.e. `hello world` -- that you pass to it:
+
+![img echo](/files/images/lessons/cli-hello-world-echo.gif)
+
+
+Not very exciting -- though the fact that the `echo` command __outputs__ text is a major concept to wrap your head around. You just don't appreciate it because in a modern GUI, virtually every thing you do makes something show up on screen.
+
+But let's do something a little more fun. Instead of `echo`, let's use __say__, which is a command only available to OS X computers. Before you run it, turn up your computer's volume.
+
+#### A note about code conventions
+
+__This is important:__ From here on out, when I show sample code to use at the command line, I __will start each line with a `$`__. It's OK to copy from me -- though you should type/autocomplete the commands without using copy/paste -- but _do not_ copy the `$` that indicates a beginning of a line.
+
+So, here's the example of how to use the `say` command:
+
+~~~sh
+$ say hello world
+~~~
+
+(__Don't copy the line-beginning `$`!__)
+
+
+# Say what?
+
+Did you have your volume turned up? Did you hear your computer talk to you? Try typing in a longer string of characters...though, for now, avoid punctuation:
+
+~~~sh
+$ say who put the bop in the bop shoo bop shoo bop Who put the dip in the dip dedip de dip
+~~~
+
+# The man page
+
+So there's not much to say about `say` -- like most command-line tools, it does what it says it does and very little else. What's the point of such a tool? Can it do anything else?
+
+Like most command-line tools, we can access the documentation of `say` by using _another_ command: __man__
+
+~~~sh
+$ man say
+~~~
+
+Hit the __spacebar__ to scroll through the documentation. Hit the letter `q` to go back to the prompt.
+
+Reading "man pages" is an acquired skill, so don't worry about feeling overwhelmed. You might have noticed this part:
+
+     -v voice, --voice=voice
+         Specify the voice to be used. Default is the voice selected in
+         System Preferences. To obtain a list of voices installed in the
+         system, specify '?' as the voice name.
+
+
+Apparently we can change what our computer voice sounds like. Let's follow the instructions to get a list of voices installed on the system. If you're new to Bash syntax, the above excerpt is the convention for telling us that we can run `say` with the `-v` _flag_ (i.e. _option_):
+
+~~~sh
+$ say -v ?
+~~~
+
+Try out one of the listed voices by passing its name to the `-v` option (and leave out the `?`):
+
+~~~sh
+$ say -v Deranged hello world
+~~~
+
+## Practice some shell keyboard-fu
+
+This is a good chance to practice some [keyboard shortcuts](/cheatsheets/keyboard#keys-terminal-shell). Follow these steps:
+
+- By now, your Terminal should be filled with a bunch of text from past commands. To clear the screen, hit __Control + L__
+- Your Terminal should now be clear except for the prompt. But don't think you've lost your work; run the __history__ command to see the most recent past commands.
+- Do you need to re-run a command that you _just_ ran? Hit the __Up__ key.
+- When you use __Up__ to recall past commands, it leaves the cursor at the end of the line. Hit __Control + A__ to make the cursor jump to the beginning, if you need to edit something near the beginning.
+
+In the GIF below, I use the __Up__ key to recall a previous `say` command, then __Control + A__ to move the cursor to the beginning, and then I add a new voice option:
+
+![img](/files/images/lessons/cli-deranged-bop.gif)
+
+
+# Standard input and output
+
+Remember the humble command of __echo__?
+
+![img](/files/images/lessons/cli-hello-again.gif)
+
+Note how the __say__ command produces _audio_, but does not print anything to screen when it runs. This characteristic of producing text output -- often referred to as [__standard output__, or __stdout__](https://en.wikipedia.org/wiki/Standard_streams#Standard_output_.28stdout.29) -- is a very important feature for command-line programs.
+
+The designers of Unix realized that they could reduce the complexity of their operating system if programmers didn't have to worry _where or how exactly_ their programs received their __input__ -- whether by keyboard, punch card, or another program -- or their __output -- e.g. monitor, printer, disk drive, or another program.
+
+# The powerful pipe
+
+So what are the implications of this when it comes to __echo__ and __say__?
+
+By default, the standard output goes to screen. The program __say__ does not follow that convention -- but that kind of makes sense, since the purpose of __say__ is to produce __audio__. But what if we connected __echo__ to __say__ so that instead of _printing to screen_, the output of __echo__ went straight into __say__?
+
+The __pipe operator__ -- `|` -- is how we connect command-line programs together. Try this:
+
+~~~sh
+$ echo hey there | say
+~~~
+
+Note how nothing is output to screen after __echo__ and __say_ complete their jobs; the output of __echo__ -- `hey there` `` has been "piped" into __say__, which also means we don't have to pass anything separately into __say__.
+
+This is a trivial example because it required _more_ typing to do the same thing as this:
+
+~~~sh
+$ say hey there
+~~~
+
+## The fun of curl
+
+But what if there was a program that could pull in input from a massive source of data -- for example, _the Internet_ -- and then pipe it into __say__?
+
+We already know how to fetch data from the web using our web browsers. Visit the URL below for a snippet of T.S. Elliot's _The Waste Land_ that I've posted onto the web:
+
+[`http://babysteps.compjour.org/files/data/wasteland.txt`](http://babysteps.compjour.org/files/data/wasteland.txt)
+
+The [__curl__](http://curl.haxx.se/) program, installed on OS X and most Linux systems by default, let's us download files from the command line. Try this out:
+
+~~~sh
+$ curl http://babysteps.compjour.org/files/data/wasteland.txt
+~~~
+
+![img](/files/images/lessons/curl-waste.gif)
+
+The __curl__ program provides a convenience of a progress bar, which is more noticeable when downloading a bigger file, but otherwise behaves like a classic Unix program by dumping its contents to __standard output__, i.e. your screen.
+
+But like __echo__, we can pipe __curl__ directly into __say__, and configure __say__ to use its `Moira` voice:
+
+~~~sh
+$ curl http://babysteps.compjour.org/files/data/wasteland.txt | say -v Moira
+~~~
+
+(remember you can hit __Ctrl + C__ to break out of a long-running program!)
+
+### More pipe!
+
+Why pipe _2_ programs when we can pipe __3__? In the other lessons of this walkthrough, we use a program named [__ag__](https://github.com/ggreer/the_silver_searcher), which allows us to filter for and match text patterns (i.e. regular expressions, [introduced in this lesson on Shakespeare](/lessons/shakespeare-gui-regex/))
+
+
+
+
+That's a bit of fun . But what if we wanted to download from an _actual_ data source? __curl__ doesn't care, just give it a URL. And what if we wanted to do something more interesting than make our computer read data to us, such as sorting, searching, filtering, emailing, tweeting, analyzing, etc? Then we find different programs to pipe to.
+
+The command-line interface is unarguably simple. But that simplicity is its strength, as it allows you to connect powerful programs to do exactly what you need to do. Now, it's just a matter of learning about all those other programs. And all the quirks of the Bash language. And...many things far beyond the scope of this introduction.
+
+# Be careful!
+
+If this is your first introduction to the command-line, by no means think that you have even a basic practical grasp of shell scripting. It is as complicated to learn as programming _because it is programming_. And the Bash language is powerful, but primitive in ways that will surprise and _not_ delight you. Re-read the [heads up warning section at the top](#heads-up-warning)

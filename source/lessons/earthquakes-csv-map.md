@@ -100,6 +100,8 @@ CartoDB is geared specifically toward making interactive, animated data maps. I'
 
 ![image](/files/images/lessons/earthquakes.csv.cartodb-torque-wizard.png)
 
+Here's [the CartoDB page for that map](https://dundee.cartodb.com/viz/31df1b04-5d22-11e5-b446-0e6e1df11cbf/map).
+
 
 # Get the text
 

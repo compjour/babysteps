@@ -2,29 +2,49 @@
 title: An introduction to regular expressions with Shakespeare
 ---
 
-A visual summary:
+This is a short introduction to using your text editor (either Atom or Sublime Text) to perform regular expression searching. It is not really a proper introduction to the deep topic of regular expressions itself, but wi
 
-An old-fashioned search:
+Here's the lesson summarized as two GIFs:
+
+An old-fashioned text search to find all instances of the word `notwithstanding` in the Complete Works of Shakespeare:
 
 ![image](/files/images/lessons/ag-gui-shakespeare-find-notwithstanding.gif)
 
-Using regular expressions:
+A text search using regular expressions to find all words of at least 15 characters in length (including `notwithstanding`) in the Complete Works of Shakespeare:
 
 ![image](/files/images/lessons/ag-gui-shakespeare-15-regex.gif)
 
 
+# Getting set up
+
+This lesson was intended for a short workshop with [Stanford Journalism](http://journalism.stanford.edu) students in a computer lab with the software OS X 10.10.5, the Atom text editor, and the [Silver Searcher](http://geoff.greer.fm/ag/) -- i.e. __ag__ -- which is important for the [command-line version of this lesson](/lessons/shakespeare-cli-regex/).
 
 
-Warning: This lesson uses the [entire works of Shakespeare](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt) as the example text file. This turns out to be a big file to crunch for a text editor to crunch, even on modern computers. You may prefer using [another text file from the Gutenberg Project](http://www.gutenberg.org/ebooks/author/65).
+## Getting a text editor
+
+The Atom text editor is free and cross-platform. It [can be downloaded here](https://atom.io/). 
+
+[Sublime Text](http://sublimetext.com), which is what I use on my own computer, works just fine, too. 
 
 
-Download -- or copy and paste -- Project Gutenberg's complete works of Shakespeare from the following URL:
+## Getting the text
 
-[http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt)
+This lesson uses the [entire works of Shakespeare](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt) as the example text file:
+
+[`http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt`](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt)
+
+__Warning:__ This turns out to be kind of a big file to crunch for a text editor to crunch, even on modern computers. You may prefer using [another text file from the Gutenberg Project's Shakespeare collection](http://www.gutenberg.org/ebooks/author/65). 
+
+Here's the direct URL for Hamlet:
+
+[`http://www.gutenberg.org/cache/epub/1524/pg1524.txt`](http://www.gutenberg.org/cache/epub/1524/pg1524.txt)
+
+Download either of those URLs. Or, if they open up in your browser, you can select-all-copy-and-paste into the text editor.
+
 
 ## Bring up the Find menu
 
-##### In Atom
+#### In Atom
 
 In the menubar, you can either click on __Find > Find in Buffer__. 
 
@@ -34,7 +54,7 @@ The __Find Panel__ should pop up at the bottom of the window:
 
 ![image](/files/images/lessons/atom-find-panel.jpg)
 
-###### Activate regex in Atom
+##### Activate regex in Atom
 
 To activate the use of regular expressions in Atom's find, click the button that has the dot-asterisk symbol: `.*`. Clicking it should highlight it (in a too subtle way). There is some text in the right side of the Find panel that should read something like:
 
@@ -71,7 +91,7 @@ When _not_ searching for a regex, the editor would attempt to find that _literal
 
 With this regex pattern, the search results only include `Enter` -- __602__ instances -- when it appears at the beginning of a line:
 
-![image](files/images/lessons/atom-regex-enter.png)
+![image](/files/images/lessons/atom-regex-enter.png)
 
 ##### The word "enter" followed by letters
 
@@ -195,9 +215,7 @@ After you've thought it through, then you can look up the specific syntax. For t
 
 (Warning: there are more than 100,000+ such matches...attempting this regex may cause your computer to slow to a crawl)
 
-![image](files/images/lessons/atom-regex-replace-space.png)
-
-
+![image](/files/images/lessons/atom-regex-replace-space.png)
 
 
 
@@ -209,6 +227,11 @@ But you don't have to memorize it; most people don't. It's more than enough to j
 
 You can move on to the [command-line version of this lesson](/lessons/shakespeare-cli-regex), which includes more examples of useful regex. Or to the more real-world example involving a search through [State Secretary Hillary Clinton's emails](/lessons/hillary-clinton-emails-grep).
 
+## More about regular expressions
+
+If you want to learn all the possibilities of regular expressions, the best reference is [www.regular-expressions.info/](http://www.regular-expressions.info/).
+
+There are several interactive sites in which you can practice regexes, and even save and link to them for future reference. [Regexr.com](http://regexr.com/) is my favorite. Here's [an example regex matching the words that immediately precede a question mark](http://regexr.com/3bqc0) in Hamlet's "To be, or not to be" soliloquy. 
 
 
 

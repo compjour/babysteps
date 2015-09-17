@@ -2,7 +2,7 @@
 title: Grepping Through State Secretary Clinton's Emails
 ---
 
-See [production notes here](/notes/hillary-clinton-emails-notes).
+The scanned emails come courtesy of the State Department and were scraped and collected [by the Wall Street Journal](http://graphics.wsj.com/hillary-clinton-email-documents/). See [production notes here](/notes/hillary-clinton-emails-notes).
 
 Given a set of emails between an unknown number of senders about an unknown number of topics, what are the kind of things we would like to find out quickly?
 
@@ -26,8 +26,8 @@ Then unzip it. Here's a sequence of commands that works for me:
 $ mkdir -p /tmp/emailstuff
 # change into the directory
 $ cd /tmp/emailstuff
-# Download the file
-$ wget http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip
+# Download the file, use its original filename
+$ curl -O http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip
 # unzip it
 $ unzip clinton_email_august_pdf_w_text.zip
 # open the resulting folder with Finder
