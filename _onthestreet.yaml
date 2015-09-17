@@ -13,7 +13,7 @@ site:
 
 services:
   google_analytics:
-    id: nil
+    id: UA-61452895-1
   typekit:
     id: nil
   disqus:

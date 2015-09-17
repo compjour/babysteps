@@ -1,9 +1,10 @@
 ---
 title: A Bootcamp of Computational Power Tools 
-layout: home
+layout: page
 ---
 
-This webpage is for the September 17, 2015 hour-long bootcamp for the 2015-2016 [Stanford Journalism](http://journalism.stanford.edu) cohort. More context and lessons, etc., to be added later.
+
+This webpage is for the September 17, 2015 hour-long bootcamp for the 2015-2016 [Stanford Journalism](http://journalism.stanford.edu) cohort. More context and lessons, etc., to be added later. It contains URLs for data used in the lesson, and notes where I've completed them.
 
 The lesson plan assumes you're trying it in the McClatchy Hall j-school computer lab with the OS X 10.10 Macs and pre-installed software. If not, j[ump here for some set up instructions for your own computer](#setup-instructions).
 
@@ -64,9 +65,9 @@ The direct URL for: All Earthquakes, Past 30 Days:
 - [Google My Maps](https://www.google.com/mymaps) - again, easier to go through [drive.google.com](https://drive.google.com).
 - [CartoDB](https://cartodb.com) - Go ahead and sign up for an account, you'll probably use this service throughout the year.
 
-You can see the map I created with CartoDB here:
+You can see the [map I created with CartoDB at this page](https://dundee.cartodb.com/viz/31df1b04-5d22-11e5-b446-0e6e1df11cbf/map).
 
-https://dundee.cartodb.com/viz/31df1b04-5d22-11e5-b446-0e6e1df11cbf/map
+
 
 The notes for this lesson are here: [Making earthquake maps from text](http://babysteps.compjour.org/lessons/earthquakes-csv-map/)
 
@@ -83,8 +84,15 @@ Open up the Atom text editor. Hit __Command + F__ to bring up the __Find__ panel
 
 The notes for this section: [An introduction to regular expressions with Shakespeare](/lessons/shakespeare-gui-regex/)
 
+# The terminal, i.e. where you shell/bash/command
 
-# How to get to your Terminal
+__Remember:__ Use __Tab__ to autocomplete as if your life depended on it:
+
+<%= kbcombo("Tab") %>
+
+
+
+## How to get to your Terminal
 
 If you go to Finder, it's in the __Applications/Utilities__ folder.
 
@@ -94,7 +102,7 @@ Or, with Finder active, use the key combo to activate the __Go to Folder__ popup
 
 Use __Tab__ to autocomplete your way to the __Terminal.app__
 
-# How to play with the Terminal
+## How to play with the Terminal
 
 A sample from "The Waste Land":
 
@@ -102,7 +110,7 @@ A sample from "The Waste Land":
 
 The notes for this section can be found here: [Fun times with the Terminal](/lessons/fun-terminal/)
 
-# Fun with baby names
+# Fun with baby names data
 
 The U.S. Social Security Administration's page, [Popular Baby Names: Beyond the Top 1000 Names](http://www.ssa.gov/oact/babynames/limits.html)
 
@@ -119,8 +127,10 @@ We may or may not get to this:
 
 [http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip](http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip)
 
+The [original zip files come from the Wall Street Journal](http://graphics.wsj.com/hillary-clinton-email-documents/).
 
-([notes under construction, probably should not read them](http://graphics.wsj.com/hillary-clinton-email-documents/))
+
+([notes under construction, probably should not read them](/lessons/hillary-clinton-emails-grep/))
 
 
 
@@ -128,8 +138,13 @@ We may or may not get to this:
 
 The [Atom text editor](https://atom.io/) can be [downloaded and installed for free](https://atom.io/).
 
-The Silver Searcher tool is a little more complicated. First of all, you need to get to your __Terminal__. And then the easiest route is to install a program named [Homebrew](http://brew.sh/)...which can be a little involved. If you feel uncertain about it -- and you should, because [the shell is terrifying](http://thenextweb.com/media/2012/05/21/how-pixars-toy-story-2-was-deleted-twice-once-by-technology-and-again-for-its-own-good/) -- there's no rush, send me a note and I can help you with it.
+The [Silver Searcher tool](https://github.com/ggreer/the_silver_searcher) is a little more complicated. First of all, you need to get to your __Terminal__. And then the easiest route is to install a program named [Homebrew](http://brew.sh/)...which can be a little involved. If you feel uncertain about it -- and you should, because [the shell is terrifying](http://thenextweb.com/media/2012/05/21/how-pixars-toy-story-2-was-deleted-twice-once-by-technology-and-again-for-its-own-good/) -- there's no rush, send me a note and I can help you with it.
 
+Once Homebrew is installed, the command to install Silver Searcher is:
+
+~~~sh
+$ brew install the_silver_searcher
+~~~
 
 ## Fun reading
 
