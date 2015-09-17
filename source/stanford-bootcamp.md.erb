@@ -1,139 +1,76 @@
 ---
-title: An Introduction to Computational Power Tools (Bootcamp)
+title: Computational Baby Steps
 ---
 
-This lesson plan is for the September 17, 2015 hour-long bootcamp for the 2015-2016 [Stanford Journalism](http://journalism.stanford.edu) cohort.
+<!-- replace index with this TKTK -->
 
-This lesson plan assumes you're trying it in the McClatchy Hall j-school computer lab with the OS X 10.10 Macs and pre-installed software. If not, j[ump here for some set up instructions for your own computer](#setup-instructions).
 
 
-### Table of contents
-{:.no_toc}
 
-* TOC
-{:toc}
+# Computational Baby Steps
 
+#### Hey Stanford Journalism students:
 
-# How to use your keyboard
+Go to this [landing page for the hour-long bootcamp](/stanford-bootcamp). You can refer to the rest of this material later.
 
-A [list of generally-useful commands (for the year) can be found here](/cheatsheets/keyboard).
+-----------------
 
-For this lesson, these are the most important:
+#### Everyone else:
 
-- __Switch Applications:__ Command + Tab
+This is a set of tutorials to acquaint data journalists with the _concept_ of going past friendly graphical user interfaces and toward the use of computing "power tools".
 
-  <%= kbcombo("Command", "Tab") %>
+I am to cover three totally different subject areas that are each extremely powerful on their own, but even moreso when used in concert:
 
-- __Switch windows (within a single app):__ Command + Tilde
+- Keyboard shortcuts and plaintext editors
+- Regular expressions to match patterns n text.
+- Shell scripting, aka Bash programming, aka the command line, aka that thing that looks like the Matrix, via the OS X Terminal.
 
-  <%= kbcombo("Command", "~") %>
 
-  
-- __Autocomplete (inside Terminal):__ Tab
 
-  <%= kbcombo("Tab") %>
 
+## Under construction
 
+(Incomplete list of incomplete tutorials)
 
-Try to use these __as much as possible__ throughout these lessons. I don't care if you're Cmd-Tabbing your way between the bootcamp lessons and Facebook, that's still a huge improvement over mouse-clicking.
+[Keyboard shortcuts cheat sheet](/cheatsheets/keyboard)
 
+[Everyday Shell Exercises](/lessons/everyday-shell-exercises)
 
+[The Terrifying Terminal](/lessons/the-terrifying-terminal/)
 
-# Making an earthquake map
 
-All of the subsequent lessons will involve staring at walls of text. But at least we'll start off by making a pretty map in CartoDB:
+### Shakespeare examples
 
-<iframe width="100%" height="400" frameborder="0" src="https://dundee.cartodb.com/viz/31df1b04-5d22-11e5-b446-0e6e1df11cbf/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>
+- [Introduction to your text editor and regular expressions and Shakespeare](/lessons/shakespeare-gui-regex/): What are regular expressions and how to use them in your text editor.
 
+- [Shakespeare and regex from the command-line](/lessons/shakespeare-cli-regex): examples of doing regex from the command-line.
 
-The USGS page for [finding and downloading earthquake CSVs](http://earthquake.usgs.gov/earthquakes/feed/v1.0/csv.php).
 
-The direct URL for: Significant Earthquakes in the Past 30 Days:
+### Baby names walkthrough
 
-[`http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv`](http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.csv)
+- [Point-and-click exploration of Beyonce as a popular baby name](/lessons/baby-steps-gui/): The old-fashioned way of getting the data and searching it.
 
-The direct URL for: All Earthquakes, Past 30 Days:
+- [Command-line exploration of Beyonce (and more) as a popular baby name](/lessons/baby-steps-cli/): Same _conceptual_ steps, but using a far more powerful, flexible interface.
 
-[`http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv`](http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.csv)
+- [Visualizing the baby name trends in Excel](/lessons/baby-names-cleaning-cli/):  It takes a bit more command-line work to get the data in shape for visualization software...
 
+- [Using regular expressions to explore the baby names](/lessons/baby-names-regex-sed-cli/) - Why stop at analyzing and visualizing a few names? With regular expressions, and a couple more (big) shell programming concepts, we  can expand our analysis exponentially with little more (manual) labor of our own.
 
-## Mapping services
 
-- [Fusion Tables](https://support.google.com/fusiontables/answer/2571232?hl=en) (it's easiest to just go through your [drive.google.com](https://drive.google.com)) and click the __New__ button.
-- [Google My Maps](https://www.google.com/mymaps) - again, easier to go through [drive.google.com](https://drive.google.com).
-- [CartoDB](https://cartodb.com) - Go ahead and sign up for an account, you'll probably use this service throughout the year.
 
-You can see the map I created with CartoDB here:
+# Other resources
 
-https://dundee.cartodb.com/viz/31df1b04-5d22-11e5-b446-0e6e1df11cbf/map
 
-The notes for this lesson are here: [Making earthquake maps from text](http://babysteps.compjour.org/lessons/earthquakes-csv-map/)
+- [Software Carpentry's tutorial on The Unix Shell](http://swcarpentry.github.io/shell-novice/)
 
-# The Atom text editor, regular expressions, and Shakespeare
+- [General purpose command-line tools](http://compciv.org/unix-tools): I put together this guide for last year's session of Computational Methods in the Civic Sphere.
 
-The URL for the full works of Shakespeare:
+- [Regular-expressions.info](http://www.regular-expressions.info/) - the most comprehensive tutorial on regular expressions.
 
-[`http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt`](http://ocw.mit.edu/ans7870/6/6.006/s08/lecturenotes/files/t8.shakespeare.txt)
+- [Regexr.com](http://regexr.com/): A place to test and link to regexes
 
-Open up the Atom text editor. Hit __Command + F__ to bring up the __Find__ panel. Select the regex button:
+- [Happy 40th birthday to grep](https://medium.com/@rualthanzauva/grep-was-a-private-command-of-mine-for-quite-a-while-before-i-made-it-public-ken-thompson-a40e24a5ef48) - grep is the famous Unix tool for speedy text matching, 40 years old and going strong.
 
-![image](/files/images/lessons/atom-find-panel-regex.jpg)
+- [Ashley Madison Code Shows More Women, and More Bots](http://gizmodo.com/ashley-madison-code-shows-more-women-and-more-bots-1727613924): a novel use of grep to quickly sift through gigabytes of data.
 
 
-The notes for this section: [An introduction to regular expressions with Shakespeare](/lessons/shakespeare-gui-regex/)
-
-
-# How to get to your Terminal
-
-If you go to Finder, it's in the __Applications/Utilities__ folder.
-
-Or, with Finder active, use the key combo to activate the __Go to Folder__ popup:
-
-<%= kbcombo("Command", "Shift", "G") %>
-
-Use __Tab__ to autocomplete your way to the __Terminal.app__
-
-# How to play with the Terminal
-
-A sample from "The Waste Land":
-
-[`http://babysteps.compjour.org/files/data/wasteland.txt`](http://babysteps.compjour.org/files/data/wasteland.txt)
-
-The notes for this section can be found here: [Fun times with the Terminal](/lessons/fun-terminal/)
-
-# Fun with baby names
-
-The U.S. Social Security Administration's page, [Popular Baby Names: Beyond the Top 1000 Names](http://www.ssa.gov/oact/babynames/limits.html)
-
-The URL for the "National Data":
-
-[`http://www.ssa.gov/oact/babynames/names.zip`](http://www.ssa.gov/oact/babynames/names.zip)
-
-Notes for this section: [Point-and-click exploration of Beyonce as a popular baby name](/lessons/baby-steps-gui/)
-
-
-# Fun with Secretary Clinton's State Department Inbox
-
-We may or may not get to this:
-
-[http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip](http://stash.compjour.org/babysteps/clinton_email_august_pdf_w_text.zip)
-
-
-([notes under construction, probably should not read them](http://graphics.wsj.com/hillary-clinton-email-documents/))
-
-
-
-# Setup instructions
-
-The [Atom text editor](https://atom.io/) can be [downloaded and installed for free](https://atom.io/).
-
-The Silver Searcher tool is a little more complicated. First of all, you need to get to your __Terminal__. And then the easiest route is to install a program named [Homebrew](http://brew.sh/)...which can be a little involved. If you feel uncertain about it -- and you should, because [the shell is terrifying](http://thenextweb.com/media/2012/05/21/how-pixars-toy-story-2-was-deleted-twice-once-by-technology-and-again-for-its-own-good/) -- there's no rush, send me a note and I can help you with it.
-
-
-## Fun reading
-
-The uses covered in this workshop are pretty basic. But here's a fun, recent example of __grep__ (the spiritual predecessor of __ag__) in investigative journalism. Via Gizmodo's Annalee Newitz: [Ashley Madison Code Shows More Women, and More Bots](http://gizmodo.com/ashley-madison-code-shows-more-women-and-more-bots-1727613924):
-
-> It’s not easy to sort through thousands of lines of code, but two things can make it faster. One is a simple but powerful search program called grep that can search text for any phrase you like. The other is a habit that engineers have of writing comments about what they’re doing in the code. Armed with grep, I could look for key phrases in both comments and the code itself. 
-
-> I knew from the company emails that the engineers and managers used certain terms for the bots, including “hosts” and “engagers.” Perhaps one of the most poignant parts of reading the engineers’ comments in the code was when I uncovered a set of descriptions for how the engager bots should act. 
